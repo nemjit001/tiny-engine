@@ -23,8 +23,5 @@ add_library(imgui STATIC "${VENDORED_LIB_BASE_DIR}/imgui/imgui.cpp" "${VENDORED_
 target_include_directories(imgui PUBLIC "${VENDORED_LIB_BASE_DIR}/imgui/")
 target_link_libraries(imgui PUBLIC glfw Vulkan::Vulkan)
 
-# Add VK Bootstrap subproject
-add_subdirectory("${VENDORED_LIB_BASE_DIR}/vk-bootstrap/")
-
 # Add VMA subproject
 add_subdirectory("${VENDORED_LIB_BASE_DIR}/VMA/")
