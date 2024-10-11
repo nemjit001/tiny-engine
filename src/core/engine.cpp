@@ -28,7 +28,9 @@ namespace tiny_engine
 		:
 		m_args(args)
 	{
-		glfwInit();
+		if (glfwInit() != GLFW_TRUE) {
+			TINY_ENGINE_DIE("Failed to initialize GLFW");
+		}
 	}
 
 	Engine::~Engine()

@@ -1,6 +1,13 @@
 #pragma once
 
+#include <cstdio>
+#include <cstdlib>
+
 #include "core/commandline_args.hpp"
+
+/// @brief Abort the current process, logging the abort msg.
+/// @param msg Message logged to stderr on process abort.
+#define TINY_ENGINE_DIE(msg)	(void)(fprintf(stderr, "%s\n", msg), abort())
 
 namespace tiny_engine
 {
