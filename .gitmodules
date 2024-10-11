@@ -1,0 +1,12 @@
+[submodule "vendored/glfw"]
+	path = vendored/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "vendored/imgui"]
+	path = vendored/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "vendored/vk-bootstrap"]
+	path = vendored/vk-bootstrap
+	url = https://github.com/charles-lunarg/vk-bootstrap
+[submodule "vendored/VMA"]
+	path = vendored/VMA
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator.git
