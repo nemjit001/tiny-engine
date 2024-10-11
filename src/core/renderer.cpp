@@ -19,9 +19,10 @@ namespace tiny_engine
         uint32_t windowExtCount = 0;
         char const** windowExtensions = glfwGetRequiredInstanceExtensions(&windowExtCount);
 
+        AppVersion appVersion = pApplication->version();
         VkApplicationInfo appInfo{};
         appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-        appInfo.applicationVersion = 0; // TODO(nemjit001): load app version from application interface
+        appInfo.applicationVersion = VK_MAKE_API_VERSION(0, appVersion.major, appVersion.minor, appVersion.patch);
         appInfo.pApplicationName = pApplication->name();
         appInfo.engineVersion = VK_MAKE_API_VERSION(0, TINY_ENGINE_VERSION_MAJOR, TINY_ENGINE_VERSION_MINOR, TINY_ENGINE_VERSION_PATCH);
         appInfo.pEngineName = TINY_ENGINE_NAME;

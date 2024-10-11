@@ -6,6 +6,14 @@
 
 namespace tiny_engine
 {
+	/// @brief Semantic versioning info for Application.
+	struct AppVersion
+	{
+		uint32_t major : 10;
+		uint32_t minor : 10;
+		uint32_t patch : 12;
+	};
+
 	/// @brief Application interface used by the `tiny_engine::Engine` class.
 	/// Child classes should implement their required virtual functions, and use the `TINY_ENGINE_MAKE_ENTRYPOINT`
 	/// macro to register their class with the engine runtime.
@@ -31,7 +39,12 @@ namespace tiny_engine
 		/// @param height 
 		virtual void handleResize(uint32_t width, uint32_t height);
 
-		/// @brief This function is used to retrieve the application name in the engine.
+		/// @brief This function is used to retrieve the application version by the engine.
+		/// Override it to set the application version to a meaningful value.
+		/// @return 
+		virtual AppVersion version() const;
+
+		/// @brief This function is used to retrieve the application name by the engine.
 		/// Override it to change the application name.
 		/// @return 
 		virtual char const* name() const;

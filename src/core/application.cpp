@@ -8,6 +8,11 @@ namespace tiny_engine
 		(void)(height);
 	}
 
+	AppVersion Application::version() const
+	{
+		return { 0, 0, 0 };
+	}
+
 	char const* Application::name() const
 	{
 		return "A Tiny Engine Application";
