@@ -1,8 +1,6 @@
 #include "core/application.hpp"
 #include "core/engine.hpp"
 
-#include <cstdio>
-
 class TinyRenderer
 	:
 	public tiny_engine::Application

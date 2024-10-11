@@ -24,7 +24,9 @@ namespace tiny_engine
 		}
 	}
 
-	Engine::Engine()
+	Engine::Engine(CommandlineArgs const& args)
+		:
+		m_args(args)
 	{
 		glfwInit();
 	}

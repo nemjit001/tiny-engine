@@ -4,6 +4,9 @@
 
 namespace tiny_engine
 {
+	/// @brief Application interface used by the `tiny_engine::Engine` class.
+	/// Child classes should implement their required virtual functions, and use the `TINY_ENGINE_MAKE_ENTRYPOINT`
+	/// macro to register their class with the engine runtime.
 	class Application
 	{
 	public:
