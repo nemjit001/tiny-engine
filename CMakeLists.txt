@@ -13,9 +13,9 @@ target_link_libraries(TinyRenderer PRIVATE glfw ${GLFW_LIBRARIES} imgui vk-boots
 target_compile_definitions(TinyRenderer PRIVATE GLFW_INCLUDE_NONE GLM_FORCE_LEFT_HANDED GLM_FORCE_DEPTH_ZERO_TO_ONE)
 target_include_directories(TinyRenderer PRIVATE "src/")
 
-if (WIN32)
+if (MSVC)
 	target_compile_options(TinyRenderer PRIVATE /W4 /WX)
-elseif(LINUX)
+else()
 	target_compile_options(TinyRenderer PRIVATE -Wall -Wpedantic -Wextra -Werror)
 endif()
 

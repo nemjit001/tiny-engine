@@ -45,7 +45,7 @@ namespace tiny_engine
 			return 1;
 		}
 
-		if (pApplication == nullptr || !pApplication->init()) {
+		if (pApplication == nullptr || !pApplication->init(m_args)) {
 			return 1;
 		}
 

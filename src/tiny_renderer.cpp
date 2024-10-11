@@ -9,7 +9,7 @@ public:
 	TinyRenderer() = default;
 	virtual ~TinyRenderer() = default;
 
-	virtual bool init() override final;
+	virtual bool init(tiny_engine::CommandlineArgs const& args) override final;
 
 	virtual void shutdown() override final;
 
@@ -22,8 +22,9 @@ public:
 	virtual char const* name() const override final;
 };
 
-bool TinyRenderer::init()
+bool TinyRenderer::init(tiny_engine::CommandlineArgs const& args)
 {
+	(void)(args);
 	return true;
 }
 

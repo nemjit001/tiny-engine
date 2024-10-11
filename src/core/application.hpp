@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+#include "core/commandline_args.hpp"
+
 namespace tiny_engine
 {
 	/// @brief Application interface used by the `tiny_engine::Engine` class.
@@ -16,7 +18,7 @@ namespace tiny_engine
 		Application(Application const&) = delete;
 		Application& operator=(Application const&) = delete;
 
-		virtual bool init() = 0;
+		virtual bool init(CommandlineArgs const& args) = 0;
 
 		virtual void shutdown() = 0;
 
