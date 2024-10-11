@@ -7,11 +7,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include("vendored/vendored.cmake")
 
 file(GLOB_RECURSE TINY_RENDERER_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
+configure_file(engine_config.h.in engine_config.h)
 
 add_executable(TinyRenderer ${TINY_RENDERER_SOURCES})
 target_link_libraries(TinyRenderer PRIVATE glfw ${GLFW_LIBRARIES} imgui GPUOpen::VulkanMemoryAllocator Vulkan::Vulkan)
 target_compile_definitions(TinyRenderer PRIVATE GLFW_INCLUDE_NONE)
-target_include_directories(TinyRenderer PRIVATE "src/")
+target_include_directories(TinyRenderer PRIVATE "src/" "${CMAKE_CURRENT_BINARY_DIR}")
 
 if (MSVC)
 	target_compile_options(TinyRenderer PRIVATE /W4 /WX)

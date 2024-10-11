@@ -1,7 +1,10 @@
-#include "core/application.hpp"
 #include "core/engine.hpp"
 
 #include <GLFW/glfw3.h>
+
+#include "core/application.hpp"
+#include "core/error_handling.hpp"
+#include "core/renderer.hpp"
 
 namespace tiny_engine
 {
@@ -40,6 +43,10 @@ namespace tiny_engine
 
 	int Engine::run(Application* pApplication)
 	{
+		if (pApplication == nullptr) {
+			return 1;
+		}
+
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		GLFWwindow* pWindow = glfwCreateWindow(DefaultWindowWidth, DefaultWindowHeight, pApplication->name(), nullptr, nullptr);
@@ -47,7 +54,9 @@ namespace tiny_engine
 			return 1;
 		}
 
-		if (pApplication == nullptr || !pApplication->init(m_args)) {
+		Renderer renderer(pWindow, pApplication);
+
+		if (!pApplication->init(m_args)) {
 			return 1;
 		}
 
