@@ -4,7 +4,6 @@
 
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/error_handling.hpp"
-#include "tiny_engine/renderer.hpp"
 
 namespace tiny_engine
 {
@@ -53,8 +52,6 @@ namespace tiny_engine
 		if (pWindow == nullptr) {
 			return 1;
 		}
-
-		Renderer renderer(pWindow, pApplication);
 
 		if (!pApplication->init(m_args)) {
 			return 1;

@@ -6,6 +6,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include("vendored/vendored.cmake")
 
+function(target_warnings_as_errors TARGET_NAME)
+	if (MSVC)
+		target_compile_options(${TARGET_NAME} PRIVATE /W4 /WX)
+	else()
+		target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+	endif()
+endfunction()
+
 add_subdirectory("tiny-engine/")
 add_subdirectory("tiny-renderer/")
 
