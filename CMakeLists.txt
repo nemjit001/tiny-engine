@@ -1,25 +1,14 @@
 cmake_minimum_required(VERSION 3.14)
-project("Tiny Renderer" VERSION 0.1.0)
+project("Tiny Engine")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include("vendored/vendored.cmake")
 
-file(GLOB_RECURSE TINY_RENDERER_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
-configure_file(engine_config.h.in engine_config.h)
+add_subdirectory("tiny-engine/")
+add_subdirectory("tiny-renderer/")
 
-add_executable(TinyRenderer ${TINY_RENDERER_SOURCES})
-target_link_libraries(TinyRenderer PRIVATE glfw ${GLFW_LIBRARIES} imgui GPUOpen::VulkanMemoryAllocator Vulkan::Vulkan)
-target_compile_definitions(TinyRenderer PRIVATE GLFW_INCLUDE_NONE)
-target_include_directories(TinyRenderer PRIVATE "src/" "${CMAKE_CURRENT_BINARY_DIR}")
-
-if (MSVC)
-	target_compile_options(TinyRenderer PRIVATE /W4 /WX)
-else()
-	target_compile_options(TinyRenderer PRIVATE -Wall -Wpedantic -Wextra -Werror)
-endif()
-
-add_custom_target(TinyRendererCopyData ALL
+add_custom_target(TinyEngineCopyDataFolder ALL
 	COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/data/" "${CMAKE_CURRENT_BINARY_DIR}/data/"
 )

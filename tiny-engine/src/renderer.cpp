@@ -1,13 +1,13 @@
-#include "core/renderer.hpp"
+#include "tiny_engine/renderer.hpp"
 
 #define GLFW_INCLUDE_VULKAN
 
 #include <GLFW/glfw3.h>
 
 #include "engine_config.h"
-#include "core/application.hpp"
-#include "core/assert.hpp"
-#include "core/error_handling.hpp"
+#include "tiny_engine/application.hpp"
+#include "tiny_engine/assert.hpp"
+#include "tiny_engine/error_handling.hpp"
 
 namespace tiny_engine
 {

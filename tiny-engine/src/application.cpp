@@ -1,4 +1,4 @@
-#include "core/application.hpp"
+#include "tiny_engine/application.hpp"
 
 namespace tiny_engine
 {

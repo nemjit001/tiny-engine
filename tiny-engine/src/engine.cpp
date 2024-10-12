@@ -1,10 +1,10 @@
-#include "core/engine.hpp"
+#include "tiny_engine/engine.hpp"
 
 #include <GLFW/glfw3.h>
 
-#include "core/application.hpp"
-#include "core/error_handling.hpp"
-#include "core/renderer.hpp"
+#include "tiny_engine/application.hpp"
+#include "tiny_engine/error_handling.hpp"
+#include "tiny_engine/renderer.hpp"
 
 namespace tiny_engine
 {
