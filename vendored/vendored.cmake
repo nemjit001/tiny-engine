@@ -9,3 +9,7 @@ set(GLFW_BUILD_DOCS OFF)
 set(GLFW_BUILD_EXAMPLES OFF)
 set(GLFW_BUILD_TESTS OFF)
 add_subdirectory("${VENDORED_LIB_BASE_DIR}/glfw/")
+
+# Add GoogleTest subproject
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+add_subdirectory("${VENDORED_LIB_BASE_DIR}/googletest")

@@ -1,9 +1,12 @@
 #include "tiny_engine/engine.hpp"
 
+#include <cstdio>
+
 #include <GLFW/glfw3.h>
 
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/error_handling.hpp"
+#include "tiny_engine/renderer.hpp"
 
 namespace tiny_engine
 {
@@ -56,6 +59,10 @@ namespace tiny_engine
 		if (!pApplication->init(m_args)) {
 			return 1;
 		}
+
+		char const* pAppName = pApplication->name();
+		AppVersion const appVersion = pApplication->version();
+		printf("Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
 
 		glfwSetWindowUserPointer(pWindow, pApplication);
 		glfwSetWindowSizeCallback(pWindow, windowSizeCallback);

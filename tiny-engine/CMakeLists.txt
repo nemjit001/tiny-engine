@@ -10,3 +10,5 @@ target_link_libraries(TinyEngine PUBLIC glfw ${GLFW_LIBRARIES})
 target_compile_definitions(TinyEngine PUBLIC GLFW_INCLUDE_NONE)
 target_include_directories(TinyEngine PUBLIC "include/" PRIVATE "src/" "${CMAKE_CURRENT_BINARY_DIR}")
 target_warnings_as_errors(TinyEngine)
+
+add_subdirectory("test/")
