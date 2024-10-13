@@ -5,6 +5,8 @@ enable_testing()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+option(TINY_ENGINE_BUILD_TESTS "Build Tiny Engine test suite" ON)
+
 include("vendored/vendored.cmake")
 
 function(target_warnings_as_errors TARGET_NAME)

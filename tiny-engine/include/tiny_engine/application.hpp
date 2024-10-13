@@ -2,10 +2,10 @@
 
 #include <cstdint>
 
-#include "tiny_engine/commandline_args.hpp"
-
 namespace tiny_engine
 {
+	class CommandlineArgs;
+
 	/// @brief Semantic versioning info for Application.
 	struct AppVersion
 	{

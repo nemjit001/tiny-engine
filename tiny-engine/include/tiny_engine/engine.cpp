@@ -7,6 +7,7 @@
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/error_handling.hpp"
 #include "tiny_engine/renderer.hpp"
+#include "tiny_engine/core/commandline_args.hpp"
 
 namespace tiny_engine
 {

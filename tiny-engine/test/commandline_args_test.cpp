@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <tiny_engine/commandline_args.hpp>
+#include <tiny_engine/core/commandline_args.hpp>
 
-namespace tiny_engine_tests
+namespace tiny_engine_core
 {
 	TEST(CommandlineArgsTests, TestEmptyArgs)
 	{
