@@ -55,7 +55,6 @@ void TinyRenderer::handleResize(uint32_t width, uint32_t height)
 
 tiny_engine::AppVersion TinyRenderer::version() const
 {
-	// FIXME(nemjit001): actually use renderer app version instead of engine version
 	return tiny_engine::AppVersion{ TINY_RENDERER_VERSION_MAJOR, TINY_RENDERER_VERSION_MINOR, TINY_RENDERER_VERSION_PATCH };
 }
 
