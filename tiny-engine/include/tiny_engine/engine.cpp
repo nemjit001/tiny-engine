@@ -48,18 +48,18 @@ namespace tiny_engine
 	int Engine::run(Application* pApplication)
 	{
 		if (pApplication == nullptr) {
-			return 1;
+			return eEngineResultNoApp;
 		}
 
 		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 		GLFWwindow* pWindow = glfwCreateWindow(DefaultWindowWidth, DefaultWindowHeight, pApplication->name(), nullptr, nullptr);
 		if (pWindow == nullptr) {
-			return 1;
+			return eEngineResultSubsystemInitFailed;
 		}
 
 		if (!pApplication->init(m_args)) {
-			return 1;
+			return eEngineResultAppInitFailed;
 		}
 
 		char const* pAppName = pApplication->name();
@@ -88,6 +88,6 @@ namespace tiny_engine
 
 		pApplication->shutdown();
 		glfwDestroyWindow(pWindow);
-		return 0;
+		return eEngineResultOK;
 	}
 }

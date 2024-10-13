@@ -6,6 +6,18 @@ namespace tiny_engine
 {
 	class Application;
 
+	/// @brief The EngineResult enum gives error codes returned by Engine::run a readable name,
+	//	and groups enum values by Engine and App errors.
+	enum EngineResult
+	{
+		eEngineResultOK = 0,
+
+		eEngineResultSubsystemInitFailed = 0x10,
+
+		eEngineResultNoApp = 0x20,
+		eEngineResultAppInitFailed,
+	};
+
 	/// @brief The Engine class wraps engine system lifetime.
 	class Engine
 	{
