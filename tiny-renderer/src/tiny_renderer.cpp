@@ -21,7 +21,7 @@ public:
 
 	virtual void handleResize(uint32_t width, uint32_t height) override final;
 
-	virtual tiny_engine::AppVersion version() const;
+	virtual tiny_engine::AppVersion version() const override final;
 
 	virtual char const* name() const override final;
 };

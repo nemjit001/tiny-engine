@@ -4,10 +4,11 @@
 
 #include <GLFW/glfw3.h>
 
+#include "tiny_engine/defines.hpp"
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/error_handling.hpp"
-#include "tiny_engine/renderer.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
+#include "tiny_engine/core/renderer.hpp"
 
 namespace tiny_engine
 {
