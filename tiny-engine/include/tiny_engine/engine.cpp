@@ -62,8 +62,10 @@ namespace tiny_engine
 			return eEngineResultAppInitFailed;
 		}
 
+		// TODO(nemjit001): Replace printf by internal logging mechanism
 		char const* pAppName = pApplication->name();
 		AppVersion const appVersion = pApplication->version();
+		printf("Initialized %s (%s)\n", TINY_ENGINE_NAME, TINY_ENGINE_VERSION_STRING);
 		printf("Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
 
 		glfwSetWindowUserPointer(pWindow, pApplication);

@@ -9,3 +9,6 @@
 #define TINY_ENGINE_COMPILER_CLANG		(__clang__ > 0L)
 #define TINY_ENGINE_COMPILER_MSVC		((_MSC_VER > 0L) && !(TINY_ENGINE_COMPILER_CLANG))
 #define TINY_ENGINE_COMPILER_GCC		((__GNUC__ > 0L) && !(TINY_ENGINE_COMPILER_CLANG))
+
+// Auto generated config file included in defines
+#include "engine_config.h"
