@@ -34,11 +34,6 @@ namespace tiny_engine
 
 		virtual void render() = 0;
 
-		/// @brief Resize callback used by the engine to pass resize information the application. Override this to customize resize handling.
-		/// @param width 
-		/// @param height 
-		virtual void handleResize(uint32_t width, uint32_t height);
-
 		/// @brief This function is used to retrieve the application version by the engine.
 		/// Override it to set the application version to a meaningful value.
 		/// @return 

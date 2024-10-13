@@ -19,8 +19,6 @@ public:
 
 	virtual void render() override final;
 
-	virtual void handleResize(uint32_t width, uint32_t height) override final;
-
 	virtual tiny_engine::AppVersion version() const override final;
 
 	virtual char const* name() const override final;
@@ -45,12 +43,6 @@ bool TinyRenderer::update()
 void TinyRenderer::render()
 {
 	//
-}
-
-void TinyRenderer::handleResize(uint32_t width, uint32_t height)
-{
-	(void)(width);
-	(void)(height);
 }
 
 tiny_engine::AppVersion TinyRenderer::version() const

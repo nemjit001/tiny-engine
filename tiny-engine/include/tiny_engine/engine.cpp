@@ -8,7 +8,6 @@
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/error_handling.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
-#include "tiny_engine/core/renderer.hpp"
 
 namespace tiny_engine
 {
@@ -20,15 +19,9 @@ namespace tiny_engine
 
 	static void windowSizeCallback(GLFWwindow* pWindow, int width, int height)
 	{
-		Application* pApp = reinterpret_cast<Application*>(glfwGetWindowUserPointer(pWindow));
-		if (pApp == nullptr) {
-			return;
-		}
-
+		// TODO(nemjit001): retrieve subsystem pointers, pass new window size to required subsystems
+		(void)(pWindow);
 		windowMinimized = (width == 0 || height == 0);
-		if (!windowMinimized) {
-			pApp->handleResize(static_cast<uint32_t>(width), static_cast<uint32_t>(height));
-		}
 	}
 
 	Engine::Engine(CommandlineArgs const& args)
@@ -68,7 +61,8 @@ namespace tiny_engine
 		printf("Initialized %s (%s)\n", TINY_ENGINE_NAME, TINY_ENGINE_VERSION_STRING);
 		printf("Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
 
-		glfwSetWindowUserPointer(pWindow, pApplication);
+		// TODO(nemjit001): Set window pointer to subsystems required by callbacks
+		glfwSetWindowUserPointer(pWindow, nullptr);
 		glfwSetWindowSizeCallback(pWindow, windowSizeCallback);
 
 		bool running = true;

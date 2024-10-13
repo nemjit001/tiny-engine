@@ -12,9 +12,11 @@ namespace tiny_engine
 	{
 		eEngineResultOK = 0,
 
-		eEngineResultSubsystemInitFailed = 0x10,
+		eEngineResultSubsystemCodes = 0x10,
+		eEngineResultSubsystemInitFailed = eEngineResultSubsystemCodes,
 
-		eEngineResultNoApp = 0x20,
+		eEngineResultAppCodes = 0x20,
+		eEngineResultNoApp = eEngineResultAppCodes,
 		eEngineResultAppInitFailed,
 	};
 
