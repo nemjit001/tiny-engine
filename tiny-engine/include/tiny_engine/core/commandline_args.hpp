@@ -9,6 +9,8 @@ namespace tiny_engine
 	class CommandlineArgs
 	{
 	public:
+		static constexpr char const* const EndOfOptions = "--";
+
 		CommandlineArgs(int argc, char const** argv);
 
 		/// @brief Check if a commandline variable is set.

@@ -36,4 +36,17 @@ namespace tiny_engine_core
 		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		ASSERT_EQ(args.argValue("foo"), "bar");
 	}
+
+	TEST(CommandlineArgsTests, TestEndOfOptions)
+	{
+		char const* argv[] = {
+			"program",
+			"bar",
+			"--", // Marks end of commands
+			"foo",
+		};
+
+		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		ASSERT_FALSE(args.isSet("foo"));
+	}
 }

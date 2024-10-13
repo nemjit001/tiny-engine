@@ -5,10 +5,8 @@ namespace tiny_engine
 	CommandlineArgs::CommandlineArgs(int argc, char const** argv)
 	{
 		this->argv.resize(argc);
-		for (int i = 0; i < argc; i++)
-		{
-			char const* pArg = argv[i];
-			this->argv[i] = pArg;
+		for (int i = 0; i < argc; i++) {
+			this->argv[i] = std::string(argv[i]);
 		}
 	}
 
@@ -16,6 +14,10 @@ namespace tiny_engine
 	{
 		for (auto const& arg : argv)
 		{
+			if (arg == CommandlineArgs::EndOfOptions) {
+				break;
+			}
+
 			if (arg == name) {
 				return true;
 			}
@@ -30,6 +32,10 @@ namespace tiny_engine
 		size_t argIdx = 0;
 		for (auto const& arg : argv)
 		{
+			if (arg == CommandlineArgs::EndOfOptions) {
+				break;
+			}
+
 			if (arg == name)
 			{
 				found = true;

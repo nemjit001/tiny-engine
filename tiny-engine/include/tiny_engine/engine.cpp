@@ -79,7 +79,7 @@ namespace tiny_engine
 				}
 
 				pApplication->render();
-			}			
+			}
 		}
 
 		pApplication->shutdown();
