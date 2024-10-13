@@ -1,6 +1,7 @@
 #pragma once
 
 #include "tiny_engine/core/commandline_args.hpp"
+#include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
 {
@@ -20,14 +21,14 @@ namespace tiny_engine
 		eEngineResultAppInitFailed,
 	};
 
-	/// @brief The Engine class wraps engine system lifetime.
+	/// @brief The Engine class contains engine functionality (init, shutdown, main loop).
 	class Engine
 	{
 	public:
 		/// @brief 
 		/// @param args Parsed commandline arguments passed to entrypoint function.
 		Engine(CommandlineArgs const& args);
-		~Engine();
+		~Engine() = default;
 
 		Engine(Engine const&) = delete;
 		Engine& operator=(Engine const&) = delete;
@@ -39,6 +40,7 @@ namespace tiny_engine
 
 	private:
 		CommandlineArgs m_args;
+		WindowSystem m_windowSystem;
 	};
 } // namespace tiny_engine
 
