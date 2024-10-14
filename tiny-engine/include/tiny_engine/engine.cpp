@@ -11,7 +11,6 @@ namespace tiny_engine
 {
 	static constexpr uint32_t const DefaultWindowWidth = 1600;
 	static constexpr uint32_t const DefaultWindowHeight = 900;
-	static constexpr bool const DefaultWindowResizable = true;
 
 	Engine::Engine(CommandlineArgs const& args)
 		:
@@ -31,15 +30,25 @@ namespace tiny_engine
 		window.pTitle = pApplication->name();
 		window.width = DefaultWindowWidth;
 		window.height = DefaultWindowHeight;
-		window.resizable = DefaultWindowResizable;
+		window.resizable = pApplication->allowWindowResize();
 
 		if (!m_windowSystem.init(window)) {
 			return eEngineResultSubsystemInitFailed;
 		}
 
-		if (!pApplication->init(m_args)) {
+		// Register subsystems for resize event.
+		m_windowSystem.setResizeHandler([&](uint32_t width, uint32_t height) {
+			pApplication->handleResize(width, height);
+		});
+
+		if (!pApplication->init(m_args, &m_windowSystem)) {
 			return eEngineResultAppInitFailed;
 		}
+
+		// Register subsystems for close event
+		m_windowSystem.setCloseHandler([&]() {
+			pApplication->exit();
+		});
 
 		// TODO(nemjit001): Replace printf by internal logging mechanism
 		char const* pAppName = pApplication->name();
@@ -47,29 +56,17 @@ namespace tiny_engine
 		printf("Initialized %s (%s)\n", TINY_ENGINE_NAME, TINY_ENGINE_VERSION_STRING);
 		printf("Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
 
-		// TODO(nemjit001): notify subsystems that require knowledge of resize in handler.
-		m_windowSystem.setResizeHandler([&](uint32_t width, uint32_t height) {
-			printf("Resize: %u %u\n", width, height);
-		});
-
-		bool running = true;
-		m_windowSystem.setCloseHandler([&running]() {
-			running = false;
-		});
-
-		while (running)
+		while (pApplication->isRunning())
 		{
-			if (!m_windowSystem.update() && running) {
+			if (!m_windowSystem.update() && pApplication->isRunning()) {
 				printf("Failed to update window system\n");
-				running = false;
-				continue;
+				pApplication->exit();
 			}
 
 			if (!m_windowSystem.minimized()) {
 				if (!pApplication->update()) {
 					printf("Failed to update application state\n");
-					running = false;
-					continue;
+					pApplication->exit();
 				}
 
 				pApplication->render();

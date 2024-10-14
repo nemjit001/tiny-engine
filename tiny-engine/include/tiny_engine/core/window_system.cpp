@@ -86,7 +86,7 @@ namespace tiny_engine
 		return !glfwWindowShouldClose(s_pWindow);
 	}
 
-	void setWindowSize(uint32_t width, uint32_t height)
+	void WindowSystem::setWindowSize(uint32_t width, uint32_t height)
 	{
 		glfwSetWindowSize(s_pWindow, width, height);
 	}
