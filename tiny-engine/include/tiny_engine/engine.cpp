@@ -11,7 +11,7 @@ namespace tiny_engine
 {
 	static constexpr uint32_t const DefaultWindowWidth = 1600;
 	static constexpr uint32_t const DefaultWindowHeight = 900;
-	static constexpr bool const DefaultWindowResizable = false;
+	static constexpr bool const DefaultWindowResizable = true;
 
 	Engine::Engine(CommandlineArgs const& args)
 		:
@@ -47,16 +47,29 @@ namespace tiny_engine
 		printf("Initialized %s (%s)\n", TINY_ENGINE_NAME, TINY_ENGINE_VERSION_STRING);
 		printf("Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
 
+		// TODO(nemjit001): notify subsystems that require knowledge of resize in handler.
+		m_windowSystem.setResizeHandler([&](uint32_t width, uint32_t height) {
+			printf("Resize: %u %u\n", width, height);
+		});
+
 		bool running = true;
+		m_windowSystem.setCloseHandler([&running]() {
+			running = false;
+		});
+
 		while (running)
 		{
-			if (!m_windowSystem.update()) {
+			if (!m_windowSystem.update() && running) {
+				printf("Failed to update window system\n");
 				running = false;
+				continue;
 			}
 
 			if (!m_windowSystem.minimized()) {
 				if (!pApplication->update()) {
+					printf("Failed to update application state\n");
 					running = false;
+					continue;
 				}
 
 				pApplication->render();

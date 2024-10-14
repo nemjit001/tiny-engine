@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include <functional>
 
 #include "tiny_engine/defines.hpp"
 
@@ -31,6 +32,9 @@ namespace tiny_engine
 	class WindowSystem
 	{
 	public:
+		using ResizeHandler = std::function<void(uint32_t, uint32_t)>;
+		using CloseHandler = std::function<void()>;
+
 		WindowSystem();
 		~WindowSystem();
 
@@ -54,9 +58,25 @@ namespace tiny_engine
 		/// @param height 
 		void setWindowSize(uint32_t width, uint32_t height);
 
+		/// @brief Set the window resize handler.
+		/// @param handler 
+		void setResizeHandler(ResizeHandler const& handler);
+
+		/// @brief Set the application window close handler.
+		/// @param handler 
+		void setCloseHandler(CloseHandler const& handler);
+
 		/// @brief Check if the application window is minimized.
 		/// @return 
 		bool minimized() const;
+
+		/// @brief Handle a window resize, using new window width and height.
+		/// @param width 
+		/// @param height 
+		void handleResize(uint32_t width, uint32_t height) const;
+
+		/// @brief Handle the main application window close.
+		void handleClose() const;
 
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 		/// @brief Retrieve the HWND associated with the application window.
@@ -78,5 +98,9 @@ namespace tiny_engine
 		/// @return 
 		VkResult createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface);
 #endif
+
+	private:
+		ResizeHandler m_resizeHandler;
+		CloseHandler m_closeHandler;
 	};
 } // namespace tiny_engine
