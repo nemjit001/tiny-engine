@@ -23,15 +23,22 @@ namespace tiny_engine
 		Application() = default;
 		virtual ~Application() = default;
 
-		Application(Application const&) = delete;
-		Application& operator=(Application const&) = delete;
+		Application(Application const&) noexcept = default;
+		Application& operator=(Application const&) noexcept = default;
 
+		/// @brief Initialize the application post construction.
+		/// @param args Commandline arguments passed to Engine.
+		/// @return A boolean indicating successful initialization.
 		virtual bool init(CommandlineArgs const& args) = 0;
 
+		/// @brief Shut down the application befor destruction. Any non RAII members should be cleaned up here.
 		virtual void shutdown() = 0;
 
+		/// @brief Update the application state.
+		/// @return A boolean indicating successful update.
 		virtual bool update() = 0;
 
+		/// @brief Render using the application.
 		virtual void render() = 0;
 
 		/// @brief This function is used to retrieve the application version by the engine.
