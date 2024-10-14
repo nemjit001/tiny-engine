@@ -8,6 +8,11 @@
 	#include <windows.h> // Needed for HWND handle type
 #endif
 
+#if		TINY_ENGINE_VULKAN_AVAILABLE
+	#define VK_NO_PROTOTYPES
+	#include <vulkan/vulkan.h>
+#endif
+
 namespace tiny_engine
 {
 	/// @brief The WindowDesc structure is used for passing initial window parameters to the WindowSystem on init.
@@ -41,6 +46,11 @@ namespace tiny_engine
 		/// @return A boolean indicating successful update.
 		bool update();
 
+		/// @brief Set the application window size.
+		/// @param width 
+		/// @param height 
+		void setWindowSize(uint32_t width, uint32_t height);
+
 		/// @brief Check if the application window is minimized.
 		/// @return 
 		bool minimized() const;
@@ -50,6 +60,20 @@ namespace tiny_engine
 		/// WARNING: This is a Windows specific function, this is not available on non-windows platforms.
 		/// @return 
 		HWND getHWND() const;
+#endif
+
+#if		TINY_ENGINE_VULKAN_AVAILABLE
+		/// @brief Retrieve the required Vulkan instance extensions for window support.
+		/// @param pExtensionCount Number of extensions in the returned array.
+		/// @return An array of extension names.
+		char const** requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const;
+
+		/// @brief Create a Vulkan surface for the main application window.
+		/// @param instance 
+		/// @param pAllocator 
+		/// @param pSurface 
+		/// @return 
+		VkResult createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface);
 #endif
 	};
 } // namespace tiny_engine

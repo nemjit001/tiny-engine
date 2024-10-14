@@ -1,14 +1,18 @@
 #include "tiny_engine/core/window_system.hpp"
 
+#if TINY_ENGINE_PLATFORM_WINDOWS
+	#define GLFW_EXPOSE_NATIVE_WIN32
+#endif
+
+#if		TINY_ENGINE_VULKAN_AVAILABLE
+	#define GLFW_INCLUDE_VULKAN
+#endif
+
 #include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
 
 #include "tiny_engine/defines.hpp"
 #include "tiny_engine/error_handling.hpp"
-
-#if TINY_ENGINE_PLATFORM_WINDOWS
-	#define GLFW_EXPOSE_NATIVE_WIN32
-	#include <GLFW/glfw3native.h>
-#endif
 
 namespace tiny_engine
 {
@@ -66,6 +70,11 @@ namespace tiny_engine
 		return !glfwWindowShouldClose(s_pWindow);
 	}
 
+	void setWindowSize(uint32_t width, uint32_t height)
+	{
+		glfwSetWindowSize(s_pWindow, width, height);
+	}
+
 	bool WindowSystem::minimized() const
 	{
 		return s_WindowMinimized;
@@ -79,6 +88,18 @@ namespace tiny_engine
 		}
 
 		return glfwGetWin32Window(s_pWindow);
+	}
+#endif
+
+#if		TINY_ENGINE_VULKAN_AVAILABLE
+	char const** WindowSystem::requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const
+	{
+		return glfwGetRequiredInstanceExtensions(pExtensionCount);
+	}
+
+	VkResult WindowSystem::createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface)
+	{
+		return glfwCreateWindowSurface(instance, s_pWindow, pAllocator, pSurface);
 	}
 #endif
 } // namespace tiny_engine
