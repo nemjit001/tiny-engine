@@ -27,7 +27,7 @@ namespace tiny_engine
 	public:
 		/// @brief 
 		/// @param args Parsed commandline arguments passed to entrypoint function.
-		Engine(CommandlineArgs const& args);
+		explicit Engine(CommandlineArgs const& args);
 		~Engine() = default;
 
 		Engine(Engine const&) = delete;
