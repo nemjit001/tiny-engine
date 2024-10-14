@@ -15,8 +15,8 @@ target_warnings_as_errors(TinyEngine)
 
 if (${VULKAN_FOUND})
 	message(STATUS "TinyEngine: Found Vulkan")
-	target_link_libraries(TinyEngine PUBLIC Vulkan::Vulkan)
-	target_compile_definitions(TinyEngine PUBLIC TINY_ENGINE_VULKAN_AVAILABLE=1)
+	target_link_libraries(TinyEngine PUBLIC Vulkan::Headers)
+	target_compile_definitions(TinyEngine PUBLIC TINY_ENGINE_VULKAN_AVAILABLE=1 VK_NO_PROTOTYPES)
 endif()
 
 if (${TINY_ENGINE_BUILD_TESTS})

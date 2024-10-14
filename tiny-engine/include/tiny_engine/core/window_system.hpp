@@ -9,7 +9,10 @@
 #endif
 
 #if		TINY_ENGINE_VULKAN_AVAILABLE
-	#define VK_NO_PROTOTYPES
+	#ifndef VK_NO_PROTOTYPES
+		#define VK_NO_PROTOTYPES
+	#endif
+
 	#include <vulkan/vulkan.h>
 #endif
 
