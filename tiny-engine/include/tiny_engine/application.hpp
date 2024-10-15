@@ -4,6 +4,7 @@
 
 namespace tiny_engine
 {
+	struct WindowSize;
 	class CommandlineArgs;
 	class WindowSystem;
 
@@ -18,14 +19,14 @@ namespace tiny_engine
 	/// @brief Application interface used by the `tiny_engine::Engine` class.
 	/// Child classes should implement their required virtual functions, and use the `TINY_ENGINE_MAKE_ENTRYPOINT`
 	/// macro to register their class with the engine runtime.
-	class Application
+	class IApplication
 	{
 	public:
-		Application() = default;
-		virtual ~Application() = default;
+		IApplication() = default;
+		virtual ~IApplication() = default;
 
-		Application(Application const&) noexcept = default;
-		Application& operator=(Application const&) noexcept = default;
+		IApplication(IApplication const&) noexcept = default;
+		IApplication& operator=(IApplication const&) noexcept = default;
 
 		/// @brief Initialize the application post construction.
 		/// @param args Commandline arguments passed to Engine.
@@ -44,9 +45,8 @@ namespace tiny_engine
 		virtual void render() = 0;
 
 		/// @brief This function is used to recieve application window resize events, it may be overridden to modify resize behaviour.
-		/// @param width New window width.
-		/// @param height New window height.
-		virtual void handleResize(uint32_t width, uint32_t height);
+		/// @param size New window size.
+		virtual void handleResize(WindowSize const& size);
 
 		/// @brief Exit the application.
 		virtual void exit();

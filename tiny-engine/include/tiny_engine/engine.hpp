@@ -1,15 +1,17 @@
 #pragma once
 
+#include <cstdint>
+
 #include "tiny_engine/core/commandline_args.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
 {
-	class Application;
+	class IApplication;
 
 	/// @brief The EngineResult enum gives error codes returned by Engine::run a readable name,
 	//	and groups enum values by Engine and App errors.
-	enum EngineResult
+	enum EngineResult : int32_t
 	{
 		eEngineResultOK = 0,
 
@@ -30,13 +32,13 @@ namespace tiny_engine
 		explicit Engine(CommandlineArgs const& args);
 		~Engine() = default;
 
-		Engine(Engine const&) = delete;
-		Engine& operator=(Engine const&) = delete;
+		Engine(Engine const&) noexcept = delete;
+		Engine& operator=(Engine const&) noexcept = delete;
 
 		/// @brief Run the engine main loop.
 		/// @param pApplication Application running on top of the engine.
 		/// @return 0 on success, non-zero otherwise.
-		int run(Application* pApplication);
+		int run(IApplication* pApplication);
 
 	private:
 		CommandlineArgs m_args;

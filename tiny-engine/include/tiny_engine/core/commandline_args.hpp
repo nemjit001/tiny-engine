@@ -23,7 +23,7 @@ namespace tiny_engine
 		/// @return An empty string if not set, or value is missing.
 		std::string argValue(std::string const& name) const;
 
-	public:
-		std::vector<std::string> argv;
+	private:
+		std::vector<std::string> m_argv;
 	};
 } // namespace tiny_engine

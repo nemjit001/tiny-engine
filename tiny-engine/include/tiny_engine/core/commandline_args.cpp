@@ -4,15 +4,15 @@ namespace tiny_engine
 {
 	CommandlineArgs::CommandlineArgs(int argc, char const** argv)
 	{
-		this->argv.resize(argc);
+		m_argv.resize(argc);
 		for (int i = 0; i < argc; i++) {
-			this->argv[i] = std::string(argv[i]);
+			m_argv[i] = std::string(argv[i]);
 		}
 	}
 
 	bool CommandlineArgs::isSet(std::string const& name) const
 	{
-		for (auto const& arg : argv)
+		for (auto const& arg : m_argv)
 		{
 			if (arg == CommandlineArgs::EndOfOptions) {
 				break;
@@ -30,7 +30,7 @@ namespace tiny_engine
 	{
 		bool found = false;
 		size_t argIdx = 0;
-		for (auto const& arg : argv)
+		for (auto const& arg : m_argv)
 		{
 			if (arg == CommandlineArgs::EndOfOptions) {
 				break;
@@ -46,8 +46,8 @@ namespace tiny_engine
 		}
 
 		// Check if next value is within argv bounds, valiation of retrieved value is left to caller
-		if (found && (argIdx + 1) < argv.size()) {
-			return argv[argIdx + 1];
+		if (found && (argIdx + 1) < m_argv.size()) {
+			return m_argv[argIdx + 1];
 		}
 
 		return {};

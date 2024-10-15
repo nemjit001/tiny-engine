@@ -6,7 +6,7 @@
 
 class TinyRenderer
 	:
-	public tiny_engine::Application
+	public tiny_engine::IApplication
 {
 public:
 	TinyRenderer() = default;
@@ -20,7 +20,7 @@ public:
 
 	virtual void render() override final;
 
-	virtual void handleResize(uint32_t width, uint32_t height) override final;
+	virtual void handleResize(tiny_engine::WindowSize const& size) override final;
 
 	virtual bool allowWindowResize() const override final;
 
@@ -29,8 +29,10 @@ public:
 	virtual char const* name() const override final;
 };
 
-bool TinyRenderer::init(TINY_ENGINE_UNUSED tiny_engine::CommandlineArgs const& args, TINY_ENGINE_UNUSED tiny_engine::WindowSystem* pWindowSystem)
+bool TinyRenderer::init(tiny_engine::CommandlineArgs const& args, tiny_engine::WindowSystem* pWindowSystem)
 {
+	TINY_ENGINE_MARK_UNUSED(args);
+	TINY_ENGINE_MARK_UNUSED(pWindowSystem);
 	return true;
 }
 
@@ -49,9 +51,9 @@ void TinyRenderer::render()
 	//
 }
 
-void TinyRenderer::handleResize(uint32_t width, uint32_t height)
+void TinyRenderer::handleResize(tiny_engine::WindowSize const& size)
 {
-	printf("Resize event: (%u x %u)\n", width, height);
+	printf("Resize event: (%u x %u)\n", size.width, size.height);
 }
 
 bool TinyRenderer::allowWindowResize() const

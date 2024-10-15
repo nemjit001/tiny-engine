@@ -27,6 +27,8 @@
 	#define TINY_ENGINE_NOINLINE
 #endif
 
+#define TINY_ENGINE_MARK_UNUSED(var)	((void)(var))
+
 // Win32 defines for windows api exclusion
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 

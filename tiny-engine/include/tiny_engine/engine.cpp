@@ -1,8 +1,9 @@
 #include "tiny_engine/engine.hpp"
 
+#include <cstdint>
 #include <cstdio>
 
-#include "tiny_engine/defines.hpp"
+#include "engine_config.h"
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
 #include "tiny_engine/core/window_system.hpp"
@@ -20,7 +21,7 @@ namespace tiny_engine
 		//
 	}
 
-	int Engine::run(Application* pApplication)
+	int Engine::run(IApplication* pApplication)
 	{
 		if (pApplication == nullptr) {
 			return eEngineResultNoApp;
@@ -37,8 +38,8 @@ namespace tiny_engine
 		}
 
 		// Register subsystems for resize event.
-		m_windowSystem.setResizeHandler([&](uint32_t width, uint32_t height) {
-			pApplication->handleResize(width, height);
+		m_windowSystem.setResizeHandler([&](WindowSize const& size) {
+			pApplication->handleResize(size);
 		});
 
 		if (!pApplication->init(m_args, &m_windowSystem)) {
@@ -77,4 +78,4 @@ namespace tiny_engine
 		m_windowSystem.shutdown();
 		return eEngineResultOK;
 	}
-}
+} // namespace tiny_engine

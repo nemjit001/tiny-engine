@@ -1,37 +1,38 @@
 #include "tiny_engine/application.hpp"
 
 #include "tiny_engine/defines.hpp"
+#include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
 {
-	bool Application::running = true;
+	bool IApplication::running = true;
 
-	void Application::handleResize(TINY_ENGINE_UNUSED uint32_t width, TINY_ENGINE_UNUSED uint32_t height)
+	void IApplication::handleResize(WindowSize const& size)
 	{
-		//
+		TINY_ENGINE_MARK_UNUSED(size);
 	}
 
-	void Application::exit()
+	void IApplication::exit()
 	{
 		running = false;
 	}
 
-	bool Application::isRunning() const
+	bool IApplication::isRunning() const
 	{
 		return running;
 	}
 
-	bool Application::allowWindowResize() const
+	bool IApplication::allowWindowResize() const
 	{
 		return false;
 	}
 
-	AppVersion Application::version() const
+	AppVersion IApplication::version() const
 	{
 		return { 0, 0, 0 };
 	}
 
-	char const* Application::name() const
+	char const* IApplication::name() const
 	{
 		return "A Tiny Engine Application";
 	}

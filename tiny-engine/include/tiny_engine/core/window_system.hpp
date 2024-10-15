@@ -6,14 +6,10 @@
 #include "tiny_engine/defines.hpp"
 
 #if		TINY_ENGINE_PLATFORM_WINDOWS
-	#include <windows.h> // Needed for HWND handle type
+	#include <windows.h>
 #endif
 
 #if		TINY_ENGINE_VULKAN_AVAILABLE
-	#ifndef VK_NO_PROTOTYPES
-		#define VK_NO_PROTOTYPES
-	#endif
-
 	#include <vulkan/vulkan.h>
 #endif
 
@@ -28,11 +24,17 @@ namespace tiny_engine
 		bool resizable;
 	};
 
+	struct WindowSize
+	{
+		uint32_t width;
+		uint32_t height;
+	};
+
 	/// @brief The WindowSystem manages the application window initialization and management.
 	class WindowSystem
 	{
 	public:
-		using ResizeHandler = std::function<void(uint32_t, uint32_t)>;
+		using ResizeHandler = std::function<void(WindowSize const&)>;
 		using CloseHandler = std::function<void()>;
 
 		WindowSystem();
@@ -54,9 +56,8 @@ namespace tiny_engine
 		bool update();
 
 		/// @brief Set the application window size.
-		/// @param width 
-		/// @param height 
-		void setWindowSize(uint32_t width, uint32_t height);
+		/// @param size
+		void setWindowSize(WindowSize const& size);
 
 		/// @brief Set the window resize handler.
 		/// @param handler 
@@ -71,9 +72,8 @@ namespace tiny_engine
 		bool minimized() const;
 
 		/// @brief Handle a window resize, using new window width and height.
-		/// @param width 
-		/// @param height 
-		void handleResize(uint32_t width, uint32_t height) const;
+		/// @param size 
+		void handleResize(WindowSize const& size) const;
 
 		/// @brief Handle the main application window close.
 		void handleClose() const;

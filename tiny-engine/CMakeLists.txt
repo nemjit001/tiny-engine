@@ -6,16 +6,11 @@ file(GLOB_RECURSE TINY_ENGINE_PUBLIC_SOURCES CONFIGURE_DEPENDS "include/*.cpp" "
 file(GLOB_RECURSE TINY_ENGINE_PRIVATE_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src/*.hpp")
 
 add_library(TinyEngine STATIC ${TINY_ENGINE_PUBLIC_SOURCES} ${TINY_ENGINE_PRIVATE_SOURCES})
-target_link_libraries(TinyEngine PUBLIC glfw ${GLFW_LIBRARIES})
-target_compile_definitions(TinyEngine PUBLIC GLFW_INCLUDE_NONE)
+target_link_libraries(TinyEngine PUBLIC glfw ${GLFW_LIBRARIES} Vulkan::Headers Microsoft::DirectX-Headers)
+target_compile_definitions(TinyEngine PUBLIC TINY_ENGINE_VULKAN_AVAILABLE=1 GLFW_INCLUDE_NONE VK_NO_PROTOTYPES)
 target_include_directories(TinyEngine PUBLIC "include/" "${CMAKE_CURRENT_BINARY_DIR}" PRIVATE "src/")
 target_warnings_as_errors(TinyEngine)
-
-if (WIN32 OR UNIX OR APPLE)
-	message(STATUS "TinyEngine: Exposing Vulkan headers")
-	target_link_libraries(TinyEngine PUBLIC Vulkan::Headers)
-	target_compile_definitions(TinyEngine PUBLIC TINY_ENGINE_VULKAN_AVAILABLE=1 VK_NO_PROTOTYPES)
-endif()
+target_enable_clang_tidy(TinyEngine)
 
 if (${TINY_ENGINE_BUILD_TESTS})
 	add_subdirectory("test/")
