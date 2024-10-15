@@ -16,6 +16,9 @@ add_subdirectory("${VENDORED_LIB_BASE_DIR}/DirectX-Headers/")
 # Add Volk subproject
 add_subdirectory("${VENDORED_LIB_BASE_DIR}/volk/")
 
+# Add Vulkan Headers subproject
+add_subdirectory("${VENDORED_LIB_BASE_DIR}/Vulkan-Headers")
+
 if (${TINY_ENGINE_BUILD_TESTS})
 	# Add GoogleTest subproject
 	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)

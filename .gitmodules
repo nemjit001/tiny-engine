@@ -10,3 +10,6 @@
 [submodule "vendored/DirectX-Headers"]
 	path = vendored/DirectX-Headers
 	url = https://github.com/microsoft/DirectX-Headers
+[submodule "vendored/Vulkan-Headers"]
+	path = vendored/Vulkan-Headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers
