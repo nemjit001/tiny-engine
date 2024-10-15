@@ -61,7 +61,11 @@ bool TinyRenderer::allowWindowResize() const
 
 tiny_engine::AppVersion TinyRenderer::version() const
 {
-	return tiny_engine::AppVersion{ TINY_RENDERER_VERSION_MAJOR, TINY_RENDERER_VERSION_MINOR, TINY_RENDERER_VERSION_PATCH };
+	return tiny_engine::AppVersion{
+		TINY_RENDERER_VERSION_MAJOR,
+		TINY_RENDERER_VERSION_MINOR,
+		TINY_RENDERER_VERSION_PATCH,
+	};
 }
 
 char const* TinyRenderer::name() const
