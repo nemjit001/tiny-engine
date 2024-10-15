@@ -1,13 +1,14 @@
 #include "tiny_engine/application.hpp"
 
+#include "tiny_engine/defines.hpp"
+
 namespace tiny_engine
 {
 	bool Application::running = true;
 
-	void Application::handleResize(uint32_t width, uint32_t height)
+	void Application::handleResize(TINY_ENGINE_UNUSED uint32_t width, TINY_ENGINE_UNUSED uint32_t height)
 	{
-		(void)(width);
-		(void)(height);
+		//
 	}
 
 	void Application::exit()

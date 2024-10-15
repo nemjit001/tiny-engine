@@ -10,6 +10,23 @@
 #define TINY_ENGINE_COMPILER_MSVC		((_MSC_VER > 0L) && !(TINY_ENGINE_COMPILER_CLANG))
 #define TINY_ENGINE_COMPILER_GCC		((__GNUC__ > 0L) && !(TINY_ENGINE_COMPILER_CLANG))
 
+#if			TINY_ENGINE_COMPILER_MSVC
+	#define TINY_ENGINE_NODISCARD	[[nodiscard]]
+	#define TINY_ENGINE_UNUSED		[[maybe_unused]]
+	#define TINY_ENGINE_FORCEINLINE	__forceinline
+	#define TINY_ENGINE_NOINLINE	__declspec(noinline)
+#elif		TINY_ENGINE_COMPILER_CLANG || TINY_ENGINE_COMPILER_GCC
+	#define TINY_ENGINE_NODISCARD	[[nodiscard]] __attribute__((warn_unused_result))
+	#define TINY_ENGINE_UNUSED		[[maybe_unused]] __attribute__((unused))
+	#define TINY_ENGINE_FORCEINLINE	__attribute__((always_inline)) inline
+	#define TINY_ENGINE_NOINLINE	__attribute__((noinline))
+#else
+	#define TINY_ENGINE_NODISCARD	[[nodiscard]]
+	#define TINY_ENGINE_UNUSED		[[maybe_unused]]
+	#define TINY_ENGINE_FORCEINLINE	inline
+	#define TINY_ENGINE_NOINLINE
+#endif
+
 // Win32 defines for windows api exclusion
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 

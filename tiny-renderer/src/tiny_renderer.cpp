@@ -1,4 +1,5 @@
 #include <tiny_engine/application.hpp>
+#include <tiny_engine/defines.hpp>
 #include <tiny_engine/engine.hpp>
 
 #include "app_config.h"
@@ -28,10 +29,8 @@ public:
 	virtual char const* name() const override final;
 };
 
-bool TinyRenderer::init(tiny_engine::CommandlineArgs const& args, tiny_engine::WindowSystem* pWindowSystem)
+bool TinyRenderer::init(TINY_ENGINE_UNUSED tiny_engine::CommandlineArgs const& args, TINY_ENGINE_UNUSED tiny_engine::WindowSystem* pWindowSystem)
 {
-	(void)(args);
-	(void)(pWindowSystem);
 	return true;
 }
 
