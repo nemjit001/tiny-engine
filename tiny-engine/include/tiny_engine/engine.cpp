@@ -1,6 +1,5 @@
 #include "tiny_engine/engine.hpp"
 
-#include <cstdint>
 #include <cstdio>
 
 #include "engine_config.h"
