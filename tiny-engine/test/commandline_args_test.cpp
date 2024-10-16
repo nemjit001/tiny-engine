@@ -5,7 +5,7 @@ namespace tiny_engine_core
 {
 	TEST(CommandlineArgsTests, TestEmptyArgs)
 	{
-		tiny_engine::CommandlineArgs empty(0, nullptr);
+		tiny_engine::core::CommandlineArgs empty(0, nullptr);
 		ASSERT_FALSE(empty.isSet("foo"));
 		ASSERT_TRUE(empty.argValue("bar").empty());
 	}
@@ -19,7 +19,7 @@ namespace tiny_engine_core
 			"baz"
 		};
 
-		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		ASSERT_TRUE(args.isSet("foo"));
 		ASSERT_TRUE(args.isSet("bar"));
 	}
@@ -33,7 +33,7 @@ namespace tiny_engine_core
 			"baz"
 		};
 
-		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		ASSERT_EQ(args.argValue("foo"), "bar");
 	}
 
@@ -46,7 +46,7 @@ namespace tiny_engine_core
 			"foo",
 		};
 
-		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		ASSERT_FALSE(args.isSet("foo"));
 	}
 
@@ -58,7 +58,7 @@ namespace tiny_engine_core
 			"--", // Marks end of commands
 		};
 
-		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		auto const& vals = args.getPostOptionsValues();
 		ASSERT_TRUE(vals.empty());
 	}
@@ -73,7 +73,7 @@ namespace tiny_engine_core
 			"foo2"
 		};
 
-		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		auto const& vals = args.getPostOptionsValues();
 		ASSERT_EQ(vals[0], "foo");
 		ASSERT_EQ(vals[1], "foo2");

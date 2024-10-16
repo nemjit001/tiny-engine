@@ -7,7 +7,7 @@ namespace tiny_engine
 {
 	bool IApplication::running = true;
 
-	void IApplication::handleResize(WindowSize const& size)
+	void IApplication::handleResize(core::WindowSize const& size)
 	{
 		TINY_ENGINE_MARK_UNUSED(size);
 	}

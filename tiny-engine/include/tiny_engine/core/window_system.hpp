@@ -13,7 +13,7 @@
 	#include <vulkan/vulkan.h>
 #endif
 
-namespace tiny_engine
+namespace tiny_engine::core
 {
 	/// @brief The WindowDesc structure is used for passing initial window parameters to the WindowSystem on init.
 	struct WindowDesc
@@ -103,4 +103,4 @@ namespace tiny_engine
 		ResizeHandler m_resizeHandler;
 		CloseHandler m_closeHandler;
 	};
-} // namespace tiny_engine
+} // namespace tiny_engine::core

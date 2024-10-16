@@ -14,7 +14,7 @@
 #include "tiny_engine/defines.hpp"
 #include "tiny_engine/error_handling.hpp"
 
-namespace tiny_engine
+namespace tiny_engine::core
 {
 	namespace
 	{
@@ -145,4 +145,4 @@ namespace tiny_engine
 		return glfwCreateWindowSurface(instance, s_pWindow, pAllocator, pSurface);
 	}
 #endif
-} // namespace tiny_engine
+} // namespace tiny_engine::core

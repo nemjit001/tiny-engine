@@ -12,7 +12,7 @@ public:
 	TinyRenderer() = default;
 	virtual ~TinyRenderer() = default;
 
-	virtual bool init(tiny_engine::CommandlineArgs const& args, tiny_engine::WindowSystem* pWindowSystem) override final;
+	virtual bool init(tiny_engine::core::CommandlineArgs const& args, tiny_engine::core::WindowSystem* pWindowSystem) override final;
 
 	virtual void shutdown() override final;
 
@@ -20,7 +20,7 @@ public:
 
 	virtual void render() override final;
 
-	virtual void handleResize(tiny_engine::WindowSize const& size) override final;
+	virtual void handleResize(tiny_engine::core::WindowSize const& size) override final;
 
 	virtual bool allowWindowResize() const override final;
 
@@ -29,7 +29,7 @@ public:
 	virtual char const* name() const override final;
 };
 
-bool TinyRenderer::init(tiny_engine::CommandlineArgs const& args, tiny_engine::WindowSystem* pWindowSystem)
+bool TinyRenderer::init(tiny_engine::core::CommandlineArgs const& args, tiny_engine::core::WindowSystem* pWindowSystem)
 {
 	TINY_ENGINE_MARK_UNUSED(args);
 	TINY_ENGINE_MARK_UNUSED(pWindowSystem);
@@ -51,7 +51,7 @@ void TinyRenderer::render()
 	//
 }
 
-void TinyRenderer::handleResize(tiny_engine::WindowSize const& size)
+void TinyRenderer::handleResize(tiny_engine::core::WindowSize const& size)
 {
 	printf("Resize event: (%u x %u)\n", size.width, size.height);
 }

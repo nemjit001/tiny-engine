@@ -1,6 +1,6 @@
 #include "tiny_engine/core/commandline_args.hpp"
 
-namespace tiny_engine
+namespace tiny_engine::core
 {
 	CommandlineArgs::CommandlineArgs(int argc, char const** argv)
 	{
@@ -72,4 +72,4 @@ namespace tiny_engine
 
 		return values;
 	}
-} // namespace tiny_engine
+} // namespace tiny_engine::core

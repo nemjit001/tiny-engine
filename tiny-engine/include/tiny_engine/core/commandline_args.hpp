@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace tiny_engine
+namespace tiny_engine::core
 {
 	/// @brief Commandline argument store, parsed from the `argv` passed to main.
 	class CommandlineArgs
@@ -28,4 +28,4 @@ namespace tiny_engine
 	private:
 		std::vector<std::string> m_argv;
 	};
-} // namespace tiny_engine
+} // namespace tiny_engine::core

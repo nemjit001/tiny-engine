@@ -3,6 +3,7 @@
 #include <cstdint>
 
 #include "tiny_engine/core/commandline_args.hpp"
+#include "tiny_engine/core/renderer.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
@@ -29,7 +30,7 @@ namespace tiny_engine
 	public:
 		/// @brief 
 		/// @param args Parsed commandline arguments passed to entrypoint function.
-		explicit Engine(CommandlineArgs const& args);
+		explicit Engine(core::CommandlineArgs const& args);
 		~Engine() = default;
 
 		Engine(Engine const&) noexcept = delete;
@@ -41,17 +42,18 @@ namespace tiny_engine
 		int run(IApplication* pApplication);
 
 	private:
-		CommandlineArgs m_args;
-		WindowSystem m_windowSystem;
+		core::CommandlineArgs m_args;
+		core::WindowSystem m_windowSystem;
+		core::Renderer m_renderer;
 	};
 } // namespace tiny_engine
 
 /// @brief Generate the fixed program entrypoint code for an Application child class.
 /// @param AppClass Application child class to run on top of the tiny_engine::Engine.
-#define TINY_ENGINE_MAKE_ENTRYPOINT(AppClass)				\
-	int main(int argc, char const** argv)					\
-	{														\
-		tiny_engine::CommandlineArgs args(argc, argv);		\
-		AppClass app;										\
-		return tiny_engine::Engine(args).run(&app);			\
+#define TINY_ENGINE_MAKE_ENTRYPOINT(AppClass)					\
+	int main(int argc, char const** argv)						\
+	{															\
+		tiny_engine::core::CommandlineArgs args(argc, argv);	\
+		AppClass app;											\
+		return tiny_engine::Engine(args).run(&app);				\
 	}

@@ -4,9 +4,12 @@
 
 namespace tiny_engine
 {
-	struct WindowSize;
-	class CommandlineArgs;
-	class WindowSystem;
+	namespace core
+	{
+		struct WindowSize;
+		class CommandlineArgs;
+		class WindowSystem;
+	} // namespace core
 
 	/// @brief Semantic versioning info for Application.
 	struct AppVersion
@@ -32,7 +35,7 @@ namespace tiny_engine
 		/// @param args Commandline arguments passed to Engine.
 		/// @param pWindowSystem window system of the Engine.
 		/// @return A boolean indicating successful initialization.
-		virtual bool init(CommandlineArgs const& args, WindowSystem* pWindowSystem) = 0;
+		virtual bool init(core::CommandlineArgs const& args, core::WindowSystem* pWindowSystem) = 0;
 
 		/// @brief Shut down the application befor destruction. Any non RAII members should be cleaned up here.
 		virtual void shutdown() = 0;
@@ -46,7 +49,7 @@ namespace tiny_engine
 
 		/// @brief This function is used to recieve application window resize events, it may be overridden to modify resize behaviour.
 		/// @param size New window size.
-		virtual void handleResize(WindowSize const& size);
+		virtual void handleResize(core::WindowSize const& size);
 
 		/// @brief Exit the application.
 		virtual void exit();

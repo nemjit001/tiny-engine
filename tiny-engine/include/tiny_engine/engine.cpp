@@ -5,6 +5,7 @@
 #include "engine_config.h"
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
+#include "tiny_engine/core/renderer.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
@@ -12,10 +13,11 @@ namespace tiny_engine
 	static constexpr uint32_t const DefaultWindowWidth = 1600;
 	static constexpr uint32_t const DefaultWindowHeight = 900;
 
-	Engine::Engine(CommandlineArgs const& args)
+	Engine::Engine(core::CommandlineArgs const& args)
 		:
 		m_args(args),
-		m_windowSystem()
+		m_windowSystem(),
+		m_renderer()
 	{
 		//
 	}
@@ -26,7 +28,7 @@ namespace tiny_engine
 			return eEngineResultNoApp;
 		}
 
-		WindowDesc window{};
+		core::WindowDesc window{};
 		window.pTitle = pApplication->name();
 		window.width = DefaultWindowWidth;
 		window.height = DefaultWindowHeight;
@@ -37,7 +39,7 @@ namespace tiny_engine
 		}
 
 		// Register subsystems for resize event.
-		m_windowSystem.setResizeHandler([&](WindowSize const& size) {
+		m_windowSystem.setResizeHandler([&](core::WindowSize const& size) {
 			pApplication->handleResize(size);
 		});
 
