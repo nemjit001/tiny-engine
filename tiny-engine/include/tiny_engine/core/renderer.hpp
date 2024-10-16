@@ -12,5 +12,8 @@ namespace tiny_engine::core
 
 		Renderer(Renderer const&) = delete;
 		Renderer& operator=(Renderer const&) = delete;
+
+	private:
+		VkInstance m_instance = VK_NULL_HANDLE;
 	};
 } // namespace tiny_engine::core
