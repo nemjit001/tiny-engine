@@ -49,4 +49,33 @@ namespace tiny_engine_core
 		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		ASSERT_FALSE(args.isSet("foo"));
 	}
+
+	TEST(CommandlineArgsTests, TestEmptyPostOptionValues)
+	{
+		char const* argv[] = {
+			"program",
+			"bar",
+			"--", // Marks end of commands
+		};
+
+		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		auto const& vals = args.getPostOptionsValues();
+		ASSERT_TRUE(vals.empty());
+	}
+
+	TEST(CommandlineArgsTests, TestPostOptionValues)
+	{
+		char const* argv[] = {
+			"program",
+			"bar",
+			"--", // Marks end of commands
+			"foo",
+			"foo2"
+		};
+
+		tiny_engine::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
+		auto const& vals = args.getPostOptionsValues();
+		ASSERT_EQ(vals[0], "foo");
+		ASSERT_EQ(vals[1], "foo2");
+	}
 }

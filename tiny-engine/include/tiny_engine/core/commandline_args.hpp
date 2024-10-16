@@ -23,6 +23,8 @@ namespace tiny_engine
 		/// @return An empty string if not set, or value is missing.
 		std::string argValue(std::string const& name) const;
 
+		std::vector<std::string> getPostOptionsValues() const;
+
 	private:
 		std::vector<std::string> m_argv;
 	};

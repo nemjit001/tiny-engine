@@ -52,4 +52,24 @@ namespace tiny_engine
 
 		return {};
 	}
+
+	std::vector<std::string> CommandlineArgs::getPostOptionsValues() const
+	{
+		std::vector<std::string> values;
+		bool postOptions = false;
+		for (auto const& arg : m_argv)
+		{
+			if (arg == CommandlineArgs::EndOfOptions)
+			{
+				postOptions = true;
+				continue;
+			}
+
+			if (postOptions) {
+				values.push_back(arg);
+			}
+		}
+
+		return values;
+	}
 } // namespace tiny_engine
