@@ -15,5 +15,6 @@ namespace tiny_engine::core
 
 	private:
 		VkInstance m_instance = VK_NULL_HANDLE;
+		VkDebugUtilsMessengerEXT m_dbgMessenger = VK_NULL_HANDLE;
 	};
 } // namespace tiny_engine::core
