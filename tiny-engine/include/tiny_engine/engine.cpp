@@ -38,8 +38,14 @@ namespace tiny_engine
 			return eEngineResultSubsystemInitFailed;
 		}
 
+		if (m_renderer.init(&m_windowSystem, pApplication) != core::RendererInitResult::OK) {
+			// TODO(nemjit001): report init error
+			return eEngineResultSubsystemInitFailed;
+		}
+
 		// Register subsystems for resize event.
 		m_windowSystem.setResizeHandler([&](core::WindowSize const& size) {
+			m_renderer.handleResize(size);
 			pApplication->handleResize(size);
 		});
 
@@ -76,6 +82,7 @@ namespace tiny_engine
 		}
 
 		pApplication->shutdown();
+		m_renderer.shutdown();
 		m_windowSystem.shutdown();
 		return eEngineResultOK;
 	}

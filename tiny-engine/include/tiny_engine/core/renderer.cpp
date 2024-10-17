@@ -8,8 +8,10 @@
 #include <volk.h>
 
 #include "engine_config.h"
+#include "tiny_engine/application.hpp"
 #include "tiny_engine/defines.hpp"
 #include "tiny_engine/error_handling.hpp"
+#include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine::core
 {
@@ -68,9 +70,20 @@ namespace tiny_engine::core
 			VK_API_VERSION_MINOR(version),
 			VK_API_VERSION_PATCH(version)
 		);
+	}
+
+	Renderer::~Renderer()
+	{
+		volkFinalize();
+	}
+
+	RendererInitResult Renderer::init(WindowSystem* pWindowSystem, IApplication const* pApplication)
+	{
+		uint32_t windowExtCount = 0;
+		char const** ppWindowExtensions = pWindowSystem->requiredVulkanInstanceExtensions(&windowExtCount);
 
 		std::vector<char const*> enabledLayers;
-		std::vector<char const*> enabledExtensions;
+		std::vector<char const*> enabledExtensions(ppWindowExtensions, ppWindowExtensions + windowExtCount);
 
 #if 	TINY_ENGINE_BUILD_DEBUG
 		enabledLayers.insert(enabledLayers.end(), s_ValidationLayers.begin(), s_ValidationLayers.end());
@@ -91,10 +104,11 @@ namespace tiny_engine::core
 		dbgMessengerCreateInfo.pUserData = nullptr;
 #endif
 
+		AppVersion const appVersion = pApplication->version();
 		VkApplicationInfo appInfo{};
 		appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-		appInfo.pApplicationName = nullptr;
-		appInfo.applicationVersion = 0;
+		appInfo.pApplicationName = pApplication->name();
+		appInfo.applicationVersion = VK_MAKE_API_VERSION(0, appVersion.major, appVersion.minor, appVersion.patch);
 		appInfo.pEngineName = TINY_ENGINE_NAME;
 		appInfo.engineVersion = VK_MAKE_API_VERSION(0, TINY_ENGINE_VERSION_MAJOR, TINY_ENGINE_VERSION_MINOR, TINY_ENGINE_VERSION_PATCH);
 		appInfo.apiVersion = VK_API_VERSION_1_3;
@@ -113,30 +127,44 @@ namespace tiny_engine::core
 #endif
 
 		if (vkFailed(vkCreateInstance(&instanceCreateInfo, nullptr, &m_instance))) {
-			TINY_ENGINE_DIE("Failed to create Vulkan instance");
+			printf("Failed to create Vulkan instance\n");
+			return RendererInitResult::BasicInitFailed;
 		}
 
 		volkLoadInstance(m_instance);
 
 #if 	TINY_ENGINE_BUILD_DEBUG
 		if (vkCreateDebugUtilsMessengerEXT == nullptr
-			|| vkCreateDebugUtilsMessengerEXT(m_instance, &dbgMessengerCreateInfo, nullptr, &m_dbgMessenger) != VK_SUCCESS) {
-			TINY_ENGINE_DIE("Failed to create Vulkan debug messenger");
+			|| vkFailed(vkCreateDebugUtilsMessengerEXT(m_instance, &dbgMessengerCreateInfo, nullptr, &m_dbgMessenger))) {
+			printf("Failed to create Vulkan debug messenger\n");
+			return RendererInitResult::BasicInitFailed;
 		}
 #elif	TINY_ENGINE_BUILD_RELEASE
 		TINY_ENGINE_MARK_UNUSED(m_dbgMessenger);
 #endif
+
+		if (vkFailed(pWindowSystem->createVulkanWindowSurface(m_instance, nullptr, &m_surface))) {
+			printf("Failed to create Vulkan surface\n");
+			return RendererInitResult::BadSurface;
+		}
+
+		return RendererInitResult::OK;
 	}
 
-	Renderer::~Renderer()
+	void Renderer::shutdown()
 	{
+		vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
 #if 	TINY_ENGINE_BUILD_DEBUG
 		if (vkDestroyDebugUtilsMessengerEXT != nullptr) {
 			vkDestroyDebugUtilsMessengerEXT(m_instance, m_dbgMessenger, nullptr);
 		}
 #endif
-
 		vkDestroyInstance(m_instance, nullptr);
-		volkFinalize();
+	}
+
+	void Renderer::handleResize(WindowSize const& size)
+	{
+		// TODO(nemjit001): Recreate swap chain w/ new size
+		TINY_ENGINE_MARK_UNUSED(size);
 	}
 } // namespace tiny_engine::core
