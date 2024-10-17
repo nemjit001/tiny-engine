@@ -42,7 +42,7 @@ namespace tiny_engine::core
 			VK_KHR_SWAPCHAIN_EXTENSION_NAME,
 		};
 
-		TINY_ENGINE_UNUSED VKAPI_CALL VkBool32 VKAPI_ATTR vulkanDebugCallback(
+		TINY_ENGINE_UNUSED VKAPI_ATTR VkBool32 VKAPI_CALL vulkanDebugCallback(
 			VkDebugUtilsMessageSeverityFlagBitsEXT severity,
 			VkDebugUtilsMessageTypeFlagsEXT type,
 			VkDebugUtilsMessengerCallbackDataEXT const* pCallbackData,
