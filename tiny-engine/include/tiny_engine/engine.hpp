@@ -12,7 +12,7 @@ namespace tiny_engine
 
 	/// @brief The EngineResult enum gives error codes returned by Engine::run a readable name,
 	//	and groups enum values by Engine and App errors.
-	enum EngineResult : int32_t
+	enum EngineResult : int8_t
 	{
 		eEngineResultOK = 0,
 

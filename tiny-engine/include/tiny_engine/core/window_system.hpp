@@ -59,6 +59,10 @@ namespace tiny_engine::core
 		/// @param size
 		void setWindowSize(WindowSize const& size);
 
+		/// @brief Get the current application window size.
+		/// @return 
+		WindowSize getWindowSize() const;
+
 		/// @brief Set the window resize handler.
 		/// @param handler 
 		void setResizeHandler(ResizeHandler const& handler);

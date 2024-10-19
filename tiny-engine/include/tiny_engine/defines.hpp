@@ -28,6 +28,7 @@
 #endif
 
 #define TINY_ENGINE_MARK_UNUSED(var)	((void)(var))
+#define TINY_ENGINE_SIZEOF_ARRAY(arr)	(sizeof((arr)) / sizeof((arr)[0]));
 
 // Win32 defines for windows api exclusion
 #if		TINY_ENGINE_PLATFORM_WINDOWS

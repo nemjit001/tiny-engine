@@ -94,6 +94,14 @@ namespace tiny_engine::core
 		glfwSetWindowSize(s_pWindow, static_cast<int>(size.width), static_cast<int>(size.height));
 	}
 
+	WindowSize WindowSystem::getWindowSize() const
+	{
+		int width = 0, height = 0;
+		glfwGetWindowSize(s_pWindow, &width, &height);
+
+		return WindowSize{ static_cast<uint32_t>(width), static_cast<uint32_t>(height) };
+	}
+
 	void WindowSystem::setResizeHandler(ResizeHandler const& handler)
 	{
 		m_resizeHandler = handler;

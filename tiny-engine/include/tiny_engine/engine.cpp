@@ -38,14 +38,14 @@ namespace tiny_engine
 			return eEngineResultSubsystemInitFailed;
 		}
 
-		if (m_renderer.init(&m_windowSystem, pApplication) != core::RendererInitResult::OK) {
+		if (m_renderer.init(&m_windowSystem, pApplication, core::VSyncMode::Enabled) != core::RendererInitResult::OK) {
 			// TODO(nemjit001): report init error
 			return eEngineResultSubsystemInitFailed;
 		}
 
 		// Register subsystems for resize event.
 		m_windowSystem.setResizeHandler([&](core::WindowSize const& size) {
-			m_renderer.handleResize(size);
+			m_renderer.recreateSwapchain(size, m_renderer.vsyncMode());
 			pApplication->handleResize(size);
 		});
 
@@ -77,7 +77,9 @@ namespace tiny_engine
 					pApplication->exit();
 				}
 
+				m_renderer.startFrame();
 				pApplication->render();
+				m_renderer.presentFrame();
 			}
 		}
 
