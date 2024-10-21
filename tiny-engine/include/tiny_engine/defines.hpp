@@ -16,7 +16,10 @@
 	#define TINY_ENGINE_FORCEINLINE	__forceinline
 	#define TINY_ENGINE_NOINLINE	__declspec(noinline)
 	#define TINY_ENGINE_APICALL		__stdcall
-	#if		TINY_ENGINE_EXPORT_SYMBOLS
+
+	#if 	TINY_ENGINE_BUILD_STATIC
+		#define TINY_ENGINE_API
+	#elif	TINY_ENGINE_EXPORT_SYMBOLS
 		#define TINY_ENGINE_API		__declspec(dllexport)
 	#else
 		#define TINY_ENGINE_API		__declspec(dllimport)
@@ -27,7 +30,10 @@
 	#define TINY_ENGINE_FORCEINLINE	__attribute__((always_inline)) inline
 	#define TINY_ENGINE_NOINLINE	__attribute__((noinline))
 	#define TINY_ENGINE_APICALL
-	#if		TINY_ENGINE_EXPORT_SYMBOLS
+
+	#if 	TINY_ENGINE_BUILD_STATIC
+		#define TINY_ENGINE_API
+	#elif	TINY_ENGINE_EXPORT_SYMBOLS
 		#define TINY_ENGINE_API		__attribute__((visibility("default")))
 	#else
 		#define TINY_ENGINE_API

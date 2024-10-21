@@ -21,12 +21,12 @@ namespace tiny_engine::core
 		PlatformHandle handle;
 	};
 
-	std::string DyLib::makeLibName(std::string const& name)
+	std::string TINY_ENGINE_APICALL DyLib::makeLibName(std::string const& name)
 	{
 		return TINY_ENGINE_DYLIB_PREFIX + name + TINY_ENGINE_DYLIB_POSTFIX;
 	}
 
-	DyLibHandle* DyLib::open(std::string const& name)
+	DyLibHandle* TINY_ENGINE_APICALL DyLib::open(std::string const& name)
 	{
 		PlatformHandle handle = nullptr;
 #if		TINY_ENGINE_PLATFORM_WINDOWS
@@ -40,7 +40,7 @@ namespace tiny_engine::core
 		return new DyLibHandle{ handle };
 	}
 
-	void DyLib::close(DyLibHandle* pLibrary)
+	void TINY_ENGINE_APICALL DyLib::close(DyLibHandle* pLibrary)
 	{
 		if (pLibrary == nullptr || pLibrary->handle == nullptr) {
 			return;
@@ -55,7 +55,7 @@ namespace tiny_engine::core
 		delete pLibrary;
 	}
 
-	PFN_TinyEngineVoidFunc DyLib::getProcAddr(DyLibHandle* pLibrary, char const* pProcName)
+	PFN_TinyEngineVoidFunc TINY_ENGINE_APICALL DyLib::getProcAddr(DyLibHandle* pLibrary, char const* pProcName)
 	{
 		if (pLibrary == nullptr || pLibrary->handle == nullptr) {
 			return nullptr;

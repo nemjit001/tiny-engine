@@ -31,7 +31,7 @@ namespace tiny_engine::core
 	};
 
 	/// @brief The WindowSystem manages the application window initialization and management.
-	class WindowSystem
+	class TINY_ENGINE_API WindowSystem
 	{
 	public:
 		using ResizeHandler = std::function<void(WindowSize const&)>;
@@ -46,54 +46,54 @@ namespace tiny_engine::core
 		/// @brief Initialize the WindowSystem, creating the main application window.
 		/// @param window Window description for the main application window.
 		/// @return A boolean indicating successful initialization.
-		bool init(WindowDesc const& window);
+		bool TINY_ENGINE_APICALL init(WindowDesc const& window);
 
 		/// @brief Shut down the WindowSystem.
-		void shutdown();
+		void TINY_ENGINE_APICALL shutdown();
 
 		/// @brief Update the window state.
 		/// @return A boolean indicating successful update.
-		bool update();
+		bool TINY_ENGINE_APICALL update();
 
 		/// @brief Set the application window size.
 		/// @param size
-		void setWindowSize(WindowSize const& size);
+		void TINY_ENGINE_APICALL setWindowSize(WindowSize const& size);
 
 		/// @brief Get the current application window size.
 		/// @return 
-		WindowSize getWindowSize() const;
+		WindowSize TINY_ENGINE_APICALL getWindowSize() const;
 
 		/// @brief Set the window resize handler.
 		/// @param handler 
-		void setResizeHandler(ResizeHandler const& handler);
+		void TINY_ENGINE_APICALL setResizeHandler(ResizeHandler const& handler);
 
 		/// @brief Set the application window close handler.
 		/// @param handler 
-		void setCloseHandler(CloseHandler const& handler);
+		void TINY_ENGINE_APICALL setCloseHandler(CloseHandler const& handler);
 
 		/// @brief Check if the application window is minimized.
 		/// @return 
-		bool minimized() const;
+		bool TINY_ENGINE_APICALL minimized() const;
 
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 		/// @brief Retrieve the HWND associated with the application window.
 		/// WARNING: This is a Windows specific function, this is not available on non-windows platforms.
 		/// @return 
-		HWND getHWND() const;
+		HWND TINY_ENGINE_APICALL getHWND() const;
 #endif
 
 #if		TINY_ENGINE_VULKAN_AVAILABLE
 		/// @brief Retrieve the required Vulkan instance extensions for window support.
 		/// @param pExtensionCount Number of extensions in the returned array.
 		/// @return An array of extension names.
-		char const** requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const;
+		char const** TINY_ENGINE_APICALL requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const;
 
 		/// @brief Create a Vulkan surface for the main application window.
 		/// @param instance 
 		/// @param pAllocator 
 		/// @param pSurface 
 		/// @return 
-		VkResult createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface);
+		VkResult TINY_ENGINE_APICALL createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface);
 #endif
 	};
 } // namespace tiny_engine::core

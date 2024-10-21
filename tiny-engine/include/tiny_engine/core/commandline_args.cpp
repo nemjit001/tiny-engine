@@ -10,7 +10,7 @@ namespace tiny_engine::core
 		}
 	}
 
-	bool CommandlineArgs::isSet(std::string const& name) const
+	bool TINY_ENGINE_APICALL CommandlineArgs::isSet(std::string const& name) const
 	{
 		for (auto const& arg : m_argv)
 		{
@@ -26,7 +26,7 @@ namespace tiny_engine::core
 		return false;
 	}
 
-	std::string CommandlineArgs::argValue(std::string const& name) const
+	std::string TINY_ENGINE_APICALL CommandlineArgs::argValue(std::string const& name) const
 	{
 		bool found = false;
 		size_t argIdx = 0;
@@ -53,7 +53,7 @@ namespace tiny_engine::core
 		return {};
 	}
 
-	std::vector<std::string> CommandlineArgs::getPostOptionsValues() const
+	std::vector<std::string> TINY_ENGINE_APICALL CommandlineArgs::getPostOptionsValues() const
 	{
 		std::vector<std::string> values;
 		bool postOptions = false;

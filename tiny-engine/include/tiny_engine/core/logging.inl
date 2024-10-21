@@ -9,7 +9,7 @@
 
 namespace tiny_engine::core
 {
-	char const* Logging::LevelToString(LogLevel level)
+	char const* TINY_ENGINE_APICALL Logging::LevelToString(LogLevel level)
 	{
 		switch (level)
 		{
@@ -33,7 +33,7 @@ namespace tiny_engine::core
 	}
 
 	template<typename ...Args>
-	void Logging::Log(LogLevel level, char const* fmt, Args&&... args)
+	void TINY_ENGINE_APICALL Logging::Log(LogLevel level, char const* fmt, Args&&... args)
 	{
 		/* Format security is disabled for this function, since it relies on passing in a format string and a variable number of arguments.
 		 * Stream based output might solve this issue, but since C IO is used currently the warning remains disabled.

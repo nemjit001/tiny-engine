@@ -11,7 +11,6 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 
-#include "tiny_engine/defines.hpp"
 #include "tiny_engine/error_handling.hpp"
 
 namespace tiny_engine::core
@@ -59,7 +58,7 @@ namespace tiny_engine::core
 		glfwTerminate();
 	}
 
-	bool WindowSystem::init(WindowDesc const& window)
+	bool TINY_ENGINE_APICALL WindowSystem::init(WindowDesc const& window)
 	{
 		if (s_pWindow != nullptr) {
 			return false;
@@ -78,24 +77,24 @@ namespace tiny_engine::core
 		return true;
 	}
 
-	void WindowSystem::shutdown()
+	void TINY_ENGINE_APICALL WindowSystem::shutdown()
 	{
 		glfwDestroyWindow(s_pWindow);
 		s_pWindow = nullptr;
 	}
 
-	bool WindowSystem::update()
+	bool TINY_ENGINE_APICALL WindowSystem::update()
 	{
 		glfwPollEvents();
 		return !glfwWindowShouldClose(s_pWindow);
 	}
 
-	void WindowSystem::setWindowSize(WindowSize const& size)
+	void TINY_ENGINE_APICALL WindowSystem::setWindowSize(WindowSize const& size)
 	{
 		glfwSetWindowSize(s_pWindow, static_cast<int>(size.width), static_cast<int>(size.height));
 	}
 
-	WindowSize WindowSystem::getWindowSize() const
+	WindowSize TINY_ENGINE_APICALL WindowSystem::getWindowSize() const
 	{
 		int width = 0, height = 0;
 		glfwGetWindowSize(s_pWindow, &width, &height);
@@ -103,23 +102,23 @@ namespace tiny_engine::core
 		return WindowSize{ static_cast<uint32_t>(width), static_cast<uint32_t>(height) };
 	}
 
-	void WindowSystem::setResizeHandler(ResizeHandler const& handler)
+	void TINY_ENGINE_APICALL WindowSystem::setResizeHandler(ResizeHandler const& handler)
 	{
 		s_ResizeHandler = handler;
 	}
 
-	void WindowSystem::setCloseHandler(CloseHandler const& handler)
+	void TINY_ENGINE_APICALL WindowSystem::setCloseHandler(CloseHandler const& handler)
 	{
 		s_CloseHandler = handler;
 	}
 
-	bool WindowSystem::minimized() const
+	bool TINY_ENGINE_APICALL WindowSystem::minimized() const
 	{
 		return s_WindowMinimized;
 	}
 
 #if		TINY_ENGINE_PLATFORM_WINDOWS
-	HWND WindowSystem::getHWND() const
+	HWND TINY_ENGINE_APICALL WindowSystem::getHWND() const
 	{
 		if (s_pWindow == nullptr) {
 			return nullptr;
@@ -130,12 +129,12 @@ namespace tiny_engine::core
 #endif
 
 #if		TINY_ENGINE_VULKAN_AVAILABLE
-	char const** WindowSystem::requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const
+	char const** TINY_ENGINE_APICALL WindowSystem::requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const
 	{
 		return glfwGetRequiredInstanceExtensions(pExtensionCount);
 	}
 
-	VkResult WindowSystem::createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface)
+	VkResult TINY_ENGINE_APICALL WindowSystem::createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface)
 	{
 		return glfwCreateWindowSurface(instance, s_pWindow, pAllocator, pSurface);
 	}
