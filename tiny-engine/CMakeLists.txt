@@ -7,7 +7,7 @@ file(GLOB_RECURSE TINY_ENGINE_PRIVATE_SOURCES CONFIGURE_DEPENDS "src/*.cpp" "src
 
 add_library(TinyEngine STATIC ${TINY_ENGINE_PUBLIC_SOURCES} ${TINY_ENGINE_PRIVATE_SOURCES})
 target_link_libraries(TinyEngine PUBLIC glfw ${GLFW_LIBRARIES} Vulkan::Headers Microsoft::DirectX-Headers volk::volk_headers)
-target_compile_definitions(TinyEngine PUBLIC TINY_ENGINE_VULKAN_AVAILABLE=1 GLFW_INCLUDE_NONE VK_NO_PROTOTYPES)
+target_compile_definitions(TinyEngine PUBLIC TINY_ENGINE_VULKAN_AVAILABLE=1 GLFW_INCLUDE_NONE VK_NO_PROTOTYPES PRIVATE TINY_ENGINE_EXPORT_SYMBOLS=1)
 target_include_directories(TinyEngine PUBLIC "include/" "${CMAKE_CURRENT_BINARY_DIR}" PRIVATE "src/")
 target_warnings_as_errors(TinyEngine)
 target_enable_clang_tidy(TinyEngine)
