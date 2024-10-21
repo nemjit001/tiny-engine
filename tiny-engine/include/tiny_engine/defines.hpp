@@ -26,7 +26,7 @@
 	#define TINY_ENGINE_UNUSED		[[maybe_unused]] __attribute__((unused))
 	#define TINY_ENGINE_FORCEINLINE	__attribute__((always_inline)) inline
 	#define TINY_ENGINE_NOINLINE	__attribute__((noinline))
-	#define TINY_ENGINE_APICALL		__attribute__((stdcall))
+	#define TINY_ENGINE_APICALL
 	#if		TINY_ENGINE_EXPORT_SYMBOLS
 		#define TINY_ENGINE_API		__attribute__((visibility("default")))
 	#else

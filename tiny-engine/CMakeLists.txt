@@ -12,6 +12,10 @@ target_include_directories(TinyEngine PUBLIC "include/" "${CMAKE_CURRENT_BINARY_
 target_warnings_as_errors(TinyEngine)
 target_enable_clang_tidy(TinyEngine)
 
+if (LINUX)
+	target_link_libraries(TinyEngine PUBLIC dl)
+endif()
+
 if (${TINY_ENGINE_BUILD_TESTS})
 	add_subdirectory("test/")
 endif()

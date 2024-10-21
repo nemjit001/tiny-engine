@@ -33,7 +33,8 @@ namespace tiny_engine::core
 		UINT const loadFlags = 0;
 		handle = LoadLibraryEx(name.c_str(), nullptr, loadFlags);
 #elif	TINY_ENGINE_PLATFORM_LINUX
-		//
+		int const mode = 0;
+		handle = dlopen(name.c_str(), mode);
 #endif
 
 		return new DyLibHandle{ handle };
@@ -48,7 +49,7 @@ namespace tiny_engine::core
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 		FreeLibrary(pLibrary->handle);
 #elif	TINY_ENGINE_PLATFORM_LINUX
-		//
+		dlclose(pLibrary->handle);
 #endif
 
 		delete pLibrary;
@@ -64,7 +65,7 @@ namespace tiny_engine::core
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 		pFunc = reinterpret_cast<PFN_TinyEngineVoidFunc>(GetProcAddress(pLibrary->handle, pProcName));
 #elif	TINY_ENGINE_PLATFORM_LINUX
-		//
+		pFunc = reinterpret_cast<PFN_TinyEngineVoidFunc>(dlsym(pLibrary->handle, pProcName));
 #endif
 
 		return pFunc;
