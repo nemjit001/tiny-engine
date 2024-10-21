@@ -75,13 +75,6 @@ namespace tiny_engine::core
 		/// @return 
 		bool minimized() const;
 
-		/// @brief Handle a window resize, using new window width and height.
-		/// @param size 
-		void handleResize(WindowSize const& size) const;
-
-		/// @brief Handle the main application window close.
-		void handleClose() const;
-
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 		/// @brief Retrieve the HWND associated with the application window.
 		/// WARNING: This is a Windows specific function, this is not available on non-windows platforms.
@@ -102,9 +95,5 @@ namespace tiny_engine::core
 		/// @return 
 		VkResult createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface);
 #endif
-
-	private:
-		ResizeHandler m_resizeHandler;
-		CloseHandler m_closeHandler;
 	};
 } // namespace tiny_engine::core

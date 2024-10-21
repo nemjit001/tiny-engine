@@ -1,11 +1,9 @@
 #include "tiny_engine/engine.hpp"
 
-#include <cstdio>
-
 #include "engine_config.h"
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
-#include "tiny_engine/core/renderer.hpp"
+#include "tiny_engine/core/logging.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
@@ -16,8 +14,7 @@ namespace tiny_engine
 	Engine::Engine(core::CommandlineArgs const& args)
 		:
 		m_args(args),
-		m_windowSystem(),
-		m_renderer()
+		m_windowSystem()
 	{
 		//
 	}
@@ -38,53 +35,41 @@ namespace tiny_engine
 			return eEngineResultSubsystemInitFailed;
 		}
 
-		if (m_renderer.init(&m_windowSystem, pApplication, core::VSyncMode::Enabled) != core::RendererInitResult::OK) {
-			// TODO(nemjit001): report init error
-			return eEngineResultSubsystemInitFailed;
-		}
-
-		// Register subsystems for resize event.
-		m_windowSystem.setResizeHandler([&](core::WindowSize const& size) {
-			m_renderer.recreateSwapchain(size, m_renderer.vsyncMode());
-			pApplication->handleResize(size);
-		});
-
 		if (!pApplication->init(m_args, &m_windowSystem)) {
 			return eEngineResultAppInitFailed;
 		}
 
-		// Register subsystems for close event
+		m_windowSystem.setResizeHandler([&](core::WindowSize const& size) {
+			pApplication->handleResize(size);
+		});
+
 		m_windowSystem.setCloseHandler([&]() {
 			pApplication->exit();
 		});
 
-		// TODO(nemjit001): Replace printf by internal logging mechanism
 		char const* pAppName = pApplication->name();
 		AppVersion const appVersion = pApplication->version();
-		printf("Initialized %s (%s)\n", TINY_ENGINE_NAME, TINY_ENGINE_VERSION_STRING);
-		printf("Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
+		core::Logging::Log(core::LogLevel::Info, "Initialized %s (%s)\n", TINY_ENGINE_NAME, TINY_ENGINE_VERSION_STRING);
+		core::Logging::Log(core::LogLevel::Info, "Loaded application: %s (v%d.%d.%d)\n", pAppName, appVersion.major, appVersion.minor, appVersion.patch);
 
 		while (pApplication->isRunning())
 		{
 			if (!m_windowSystem.update() && pApplication->isRunning()) {
-				printf("Failed to update window system\n");
+				core::Logging::Log(core::LogLevel::Error, "Failed to update window system\n");
 				pApplication->exit();
 			}
 
 			if (!m_windowSystem.minimized()) {
 				if (!pApplication->update()) {
-					printf("Failed to update application state\n");
+					core::Logging::Log(core::LogLevel::Error, "Failed to update application state\n");
 					pApplication->exit();
 				}
 
-				m_renderer.startFrame();
 				pApplication->render();
-				m_renderer.presentFrame();
 			}
 		}
 
 		pApplication->shutdown();
-		m_renderer.shutdown();
 		m_windowSystem.shutdown();
 		return eEngineResultOK;
 	}

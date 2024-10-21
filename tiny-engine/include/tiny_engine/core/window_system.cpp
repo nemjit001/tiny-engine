@@ -20,6 +20,8 @@ namespace tiny_engine::core
 	{
 		bool s_WindowMinimized = false;
 		GLFWwindow* s_pWindow = nullptr;
+		WindowSystem::ResizeHandler s_ResizeHandler;
+		WindowSystem::CloseHandler s_CloseHandler;
 
 		void windowSizeCallback(GLFWwindow* pWindow, int width, int height)
 		{
@@ -28,9 +30,8 @@ namespace tiny_engine::core
 			}
 
 			s_WindowMinimized = (width == 0 || height == 0);
-			WindowSystem* pThis = reinterpret_cast<WindowSystem*>(glfwGetWindowUserPointer(pWindow));
-			if (!s_WindowMinimized) {
-				pThis->handleResize(WindowSize{ static_cast<uint32_t>(width), static_cast<uint32_t>(height) });
+			if (!s_WindowMinimized && s_ResizeHandler) {
+				s_ResizeHandler(WindowSize{ static_cast<uint32_t>(width), static_cast<uint32_t>(height) });
 			}
 		}
 
@@ -40,8 +41,9 @@ namespace tiny_engine::core
 				return;
 			}
 
-			WindowSystem* pThis = reinterpret_cast<WindowSystem*>(glfwGetWindowUserPointer(pWindow));
-			pThis->handleClose();
+			if (s_CloseHandler) {
+				s_CloseHandler();
+			}
 		}
 	} // namespace
 
@@ -70,7 +72,6 @@ namespace tiny_engine::core
 			return false;
 		}
 
-		glfwSetWindowUserPointer(s_pWindow, this);
 		glfwSetWindowSizeCallback(s_pWindow, windowSizeCallback);
 		glfwSetWindowCloseCallback(s_pWindow, windowCloseCallback);
 
@@ -104,31 +105,17 @@ namespace tiny_engine::core
 
 	void WindowSystem::setResizeHandler(ResizeHandler const& handler)
 	{
-		m_resizeHandler = handler;
+		s_ResizeHandler = handler;
 	}
 
 	void WindowSystem::setCloseHandler(CloseHandler const& handler)
 	{
-		m_closeHandler = handler;
+		s_CloseHandler = handler;
 	}
 
 	bool WindowSystem::minimized() const
 	{
 		return s_WindowMinimized;
-	}
-
-	void WindowSystem::handleResize(WindowSize const& size) const
-	{
-		if (m_resizeHandler) {
-			m_resizeHandler(size);
-		}
-	}
-
-	void WindowSystem::handleClose() const
-	{
-		if (m_closeHandler) {
-			m_closeHandler();
-		}
 	}
 
 #if		TINY_ENGINE_PLATFORM_WINDOWS

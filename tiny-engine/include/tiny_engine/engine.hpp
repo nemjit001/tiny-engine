@@ -3,7 +3,6 @@
 #include <cstdint>
 
 #include "tiny_engine/core/commandline_args.hpp"
-#include "tiny_engine/core/renderer.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
@@ -44,7 +43,6 @@ namespace tiny_engine
 	private:
 		core::CommandlineArgs m_args;
 		core::WindowSystem m_windowSystem;
-		core::Renderer m_renderer;
 	};
 } // namespace tiny_engine
 
