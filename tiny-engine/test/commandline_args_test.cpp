@@ -7,7 +7,7 @@ namespace tiny_engine_core
 	{
 		tiny_engine::core::CommandlineArgs empty(0, nullptr);
 		ASSERT_FALSE(empty.isSet("foo"));
-		ASSERT_TRUE(empty.argValue("bar").empty());
+		ASSERT_STREQ(empty.argValue("bar"), "");
 	}
 
 	TEST(CommandlineArgsTests, TestFlagArgs)
@@ -34,7 +34,7 @@ namespace tiny_engine_core
 		};
 
 		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
-		ASSERT_EQ(args.argValue("foo"), "bar");
+		ASSERT_STREQ(args.argValue("foo"), "bar");
 	}
 
 	TEST(CommandlineArgsTests, TestEndOfOptions)
@@ -59,8 +59,10 @@ namespace tiny_engine_core
 		};
 
 		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
-		auto const& vals = args.getPostOptionsValues();
-		ASSERT_TRUE(vals.empty());
+		uint32_t valCount = 0;
+		char const** vals = args.getPostOptionsValues(&valCount);
+		ASSERT_EQ(valCount, 0);
+		ASSERT_EQ(vals, nullptr);
 	}
 
 	TEST(CommandlineArgsTests, TestPostOptionValues)
@@ -74,8 +76,11 @@ namespace tiny_engine_core
 		};
 
 		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
-		auto const& vals = args.getPostOptionsValues();
-		ASSERT_EQ(vals[0], "foo");
-		ASSERT_EQ(vals[1], "foo2");
+		uint32_t valCount = 0;
+		auto const& vals = args.getPostOptionsValues(&valCount);
+		ASSERT_EQ(valCount, 2);
+		ASSERT_NE(vals, nullptr);
+		ASSERT_STREQ(vals[0], "foo");
+		ASSERT_STREQ(vals[1], "foo2");
 	}
 }

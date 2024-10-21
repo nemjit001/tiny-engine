@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstdint>
 
 #include "tiny_engine/defines.hpp"
 
@@ -14,20 +13,24 @@ namespace tiny_engine::core
 		CommandlineArgs(int argc, char const** argv);
 
 		/// @brief Check if a commandline variable is set.
-		/// @param name Entire name of the variable, with leading symbols (i.e. "foo" is different from "--foo").
+		/// @param pName Entire name of the variable, with leading symbols (i.e. "foo" is different from "--foo").
 		/// @return A boolean indicating if the variable is set.
-		bool TINY_ENGINE_APICALL isSet(std::string const& name) const;
+		bool TINY_ENGINE_APICALL isSet(char const* pName) const;
 
 		/// @brief Retrieve the value associated with a commandline argument.
-		/// @param name Entire name of the variable, with leading symbols.
-		/// @return An empty string if not set, or value is missing.
-		std::string TINY_ENGINE_APICALL argValue(std::string const& name) const;
+		/// @param pName Entire name of the variable, with leading symbols.
+		/// @return An empty cstring if not set, or the value is missing.
+		char const* TINY_ENGINE_APICALL argValue(char const* pName) const;
 
-		std::vector<std::string> TINY_ENGINE_APICALL getPostOptionsValues() const;
+		/// @brief Get the post options values passed to the program.
+		/// @param pCount Number of option values returned.
+		/// @return 
+		char const** TINY_ENGINE_APICALL getPostOptionsValues(uint32_t* pCount) const;
 
 	private:
 		static constexpr char const* const EndOfOptions = "--";
 
-		std::vector<std::string> m_argv;
+		size_t m_argc = 0;
+		char const** m_ppArgv = nullptr;
 	};
 } // namespace tiny_engine::core
