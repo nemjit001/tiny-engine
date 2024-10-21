@@ -41,6 +41,9 @@ namespace tiny_engine::core
 #if		TINY_ENGINE_COMPILER_CLANG
 	#pragma clang diagnostic push
 	#pragma clang diagnostic ignored "-Wformat-security"
+#elif 	TINY_ENGINE_COMPILER_GCC
+	#pragma GCC diagnostic push
+	#pragma GCC diagnostic ignored "-Wformat-security"
 #endif
 
 		fprintf(stdout, "[%s]", Logging::LevelToString(level));
@@ -49,6 +52,8 @@ namespace tiny_engine::core
 
 #if		TINY_ENGINE_COMPILER_CLANG
 	#pragma clang diagnostic pop
+#elif 	TINY_ENGINE_COMPILER_GCC
+	#pragma GCC diagnostic pop
 #endif
 	}
 } // namespace tiny_engine::core
