@@ -21,15 +21,10 @@ namespace tiny_engine::core
 	class TINY_ENGINE_API DyLib
 	{
 	public:
-		/// @brief Generate platform specific library name using dylib pre and postfix macro values.
-		/// @param name Library name to modify.
-		/// @return The platform specific library name.
-		static std::string TINY_ENGINE_APICALL makeLibName(std::string const& name);
-
 		/// @brief Open a DyLibHandle using a library name. This must be a platform library name with the pre and postfix values matching the platform conventions.
-		/// @param name Library name.
+		/// @param pName Library name.
 		/// @return A new DyLibHandle pointer that must be closed using `DyLib::close`.
-		static DyLibHandle* TINY_ENGINE_APICALL open(std::string const& name);
+		static DyLibHandle* TINY_ENGINE_APICALL open(char const* pName);
 
 		/// @brief Close a DyLibHandle, freeing internal resources.
 		/// @param pLibrary Library handle to close.
@@ -40,5 +35,10 @@ namespace tiny_engine::core
 		/// @param pProcName Function symbol name.
 		/// @return A TinyEngineVoidFunc pointer that may be reinterpreted to the underlying function type.
 		static PFN_TinyEngineVoidFunc TINY_ENGINE_APICALL getProcAddr(DyLibHandle* pLibrary, char const* pProcName);
+
+		/// @brief Test if a dynamic library has been loaded.
+		/// @param pHandle Handle to test.
+		/// @return 
+		static bool TINY_ENGINE_APICALL loaded(DyLibHandle* pHandle);
 	};
 } // namespace tiny_engine::core

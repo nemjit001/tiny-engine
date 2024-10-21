@@ -6,6 +6,8 @@
 	#include <dlfcn.h>
 #endif
 
+#include "tiny_engine/assert.hpp"
+
 namespace tiny_engine::core
 {
 #if		TINY_ENGINE_PLATFORM_WINDOWS
@@ -21,20 +23,17 @@ namespace tiny_engine::core
 		PlatformHandle handle;
 	};
 
-	std::string TINY_ENGINE_APICALL DyLib::makeLibName(std::string const& name)
+	DyLibHandle* TINY_ENGINE_APICALL DyLib::open(char const* pName)
 	{
-		return TINY_ENGINE_DYLIB_PREFIX + name + TINY_ENGINE_DYLIB_POSTFIX;
-	}
+		TINY_ENGINE_ASSERT(pName != nullptr);
 
-	DyLibHandle* TINY_ENGINE_APICALL DyLib::open(std::string const& name)
-	{
 		PlatformHandle handle = nullptr;
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 		UINT const loadFlags = 0;
-		handle = LoadLibraryEx(name.c_str(), nullptr, loadFlags);
+		handle = LoadLibraryEx(pName, nullptr, loadFlags);
 #elif	TINY_ENGINE_PLATFORM_LINUX
 		int const mode = 0;
-		handle = dlopen(name.c_str(), mode);
+		handle = dlopen(pName, mode);
 #endif
 
 		return new DyLibHandle{ handle };
@@ -69,5 +68,14 @@ namespace tiny_engine::core
 #endif
 
 		return pFunc;
+	}
+
+	bool TINY_ENGINE_APICALL DyLib::loaded(DyLibHandle* pHandle)
+	{
+		if (pHandle == nullptr) {
+			return false;
+		}
+
+		return pHandle->handle != nullptr;
 	}
 } // namespace tiny_engine::core
