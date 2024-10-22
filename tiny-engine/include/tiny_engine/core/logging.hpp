@@ -7,7 +7,7 @@
 namespace tiny_engine::core
 {
 	/// @brief Log level for use in Logging system.
-	enum class LogLevel : uint8_t
+	enum class LogLevel : int8_t
 	{
 		Trace = 0x01,
 		Info = 0x02,
