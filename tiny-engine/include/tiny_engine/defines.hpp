@@ -48,16 +48,18 @@
 #endif
 
 // NOLINTBEGIN(bugprone-reserved-identifier)
-#define _TINY_ENGINE_STRINGIFY(var)		#var
-#define _TINY_ENGINE_CONCAT(lhs, rhs)	lhs##rhs
+#define _TINY_ENGINE_STRINGIFY(var)			#var
+#define _TINY_ENGINE_CONCAT(lhs, rhs)		lhs ## rhs
+#define _TINY_ENGINE_STRCONCAT(lhs, rhs)	lhs rhs
 // NOLINTEND(bugprone-reserved-identifier)
 
 #define TINY_ENGINE_MARK_UNUSED(var)	((void)(var))
 #define TINY_ENGINE_SIZEOF_ARRAY(arr)	(sizeof((arr)) / sizeof((arr)[0]))
 
 #define TINY_ENGINE_EXPAND(macro)		macro
-#define TINY_ENGINE_STRINGIFY(var)		_TINY_ENGINE_STRINGIFY_SIMPLE(var)
-#define TINY_ENGINE_CONCAT(lhs, rhs)	_TINY_ENGINE_CONCAT_SIMPLE(lhs, rhs)
+#define TINY_ENGINE_STRINGIFY(var)		_TINY_ENGINE_STRINGIFY(var)
+#define TINY_ENGINE_CONCAT(lhs, rhs)	_TINY_ENGINE_CONCAT(lhs, rhs)
+#define TINY_ENGINE_STRCONCAT(lhs, rhs)	_TINY_ENGINE_STRCONCAT(lhs, rhs)
 
 // Win32 defines for windows api exclusion
 #if		TINY_ENGINE_PLATFORM_WINDOWS

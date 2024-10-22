@@ -12,12 +12,20 @@
 	#define TINY_ENGINE_DYLIB_POSTFIX	".so"
 #endif
 
+///@brief Generate a dylib name for the current platform using a string constant and platform specific pre- and postfix.
+/// This only works for a libname, not for paths to a dylib.
+#define TINY_ENGINE_DYLIB_NAME(name)	\
+	TINY_ENGINE_STRCONCAT(TINY_ENGINE_STRCONCAT(TINY_ENGINE_DYLIB_PREFIX, name), TINY_ENGINE_DYLIB_POSTFIX)
+
 namespace tiny_engine::core
 {
+	/// @brief The TinyEngineVoidFunc function pointer is used as basic return type from symbol resolution by `DyLib::getProcAddr`.
 	typedef void(TINY_ENGINE_APICALL *PFN_TinyEngineVoidFunc)(void);
 
+	/// @brief A Dynamic Library handle.
 	struct DyLibHandle;
 
+	/// @brief The DyLib class allows for opening and closing dynamic libraries in a platform agnostic manner.
 	class TINY_ENGINE_API DyLib
 	{
 	public:
