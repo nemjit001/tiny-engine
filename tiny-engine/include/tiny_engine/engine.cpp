@@ -69,6 +69,8 @@ namespace tiny_engine
 			}
 		}
 
+		core::Logging::Log(core::LogLevel::Info, "Shutting down %s\n", TINY_ENGINE_NAME);
+
 		pApplication->shutdown();
 		m_windowSystem.shutdown();
 		return eEngineResultOK;
