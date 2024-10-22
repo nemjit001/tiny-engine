@@ -41,7 +41,7 @@
 #elif	TINY_ENGINE_COMPILER_GCC || (TINY_ENGINE_COMPILER_GCC && TINY_ENGINE_COMPILER_CLANG)
 	#define TINY_ENGINE_APICALL
 	#if	TINY_ENGINE_EXPORT_SYMBOLS
-		#define TINY_ENGINE_API		__attribute__((visbility("default")))
+		#define TINY_ENGINE_API		__attribute__((visibility("default")))
 	#else
 		#define TINY_ENGINE_API
 	#endif
