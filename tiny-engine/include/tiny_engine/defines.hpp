@@ -7,44 +7,44 @@
 #define TINY_ENGINE_PLATFORM_LINUX		(__unix > 0L)
 
 #define TINY_ENGINE_COMPILER_CLANG		(__clang__ > 0L)
-#define TINY_ENGINE_COMPILER_MSVC		((_MSC_VER > 0L) && !(TINY_ENGINE_COMPILER_CLANG))
-#define TINY_ENGINE_COMPILER_GCC		((__GNUC__ > 0L) && !(TINY_ENGINE_COMPILER_CLANG))
+#define TINY_ENGINE_COMPILER_MSVC		(_MSC_VER > 0L)
+#define TINY_ENGINE_COMPILER_GCC		(__GNUC__ > 0L)
 
-#if			TINY_ENGINE_COMPILER_MSVC
+// Define per compiler function attributes
+#if			TINY_ENGINE_COMPILER_MSVC && !TINY_ENGINE_COMPILER_CLANG
 	#define TINY_ENGINE_NODISCARD	[[nodiscard]]
 	#define TINY_ENGINE_UNUSED		[[maybe_unused]]
 	#define TINY_ENGINE_FORCEINLINE	__forceinline
 	#define TINY_ENGINE_NOINLINE	__declspec(noinline)
-	#define TINY_ENGINE_APICALL		__stdcall
-
-	#if 	TINY_ENGINE_BUILD_STATIC
-		#define TINY_ENGINE_API
-	#elif	TINY_ENGINE_EXPORT_SYMBOLS
-		#define TINY_ENGINE_API		__declspec(dllexport)
-	#else
-		#define TINY_ENGINE_API		__declspec(dllimport)
-	#endif
-#elif		TINY_ENGINE_COMPILER_CLANG || TINY_ENGINE_COMPILER_GCC
+#elif		TINY_ENGINE_COMPILER_GCC || TINY_ENGINE_COMPILER_CLANG
 	#define TINY_ENGINE_NODISCARD	[[nodiscard]] __attribute__((warn_unused_result))
 	#define TINY_ENGINE_UNUSED		[[maybe_unused]] __attribute__((unused))
 	#define TINY_ENGINE_FORCEINLINE	__attribute__((always_inline)) inline
 	#define TINY_ENGINE_NOINLINE	__attribute__((noinline))
-	#define TINY_ENGINE_APICALL
-
-	#if 	TINY_ENGINE_BUILD_STATIC
-		#define TINY_ENGINE_API
-	#elif	TINY_ENGINE_EXPORT_SYMBOLS
-		#define TINY_ENGINE_API		__attribute__((visibility("default")))
-	#else
-		#define TINY_ENGINE_API
-	#endif
 #else
 	#define TINY_ENGINE_NODISCARD	[[nodiscard]]
 	#define TINY_ENGINE_UNUSED		[[maybe_unused]]
 	#define TINY_ENGINE_FORCEINLINE	inline
 	#define TINY_ENGINE_NOINLINE
+#endif
+
+// Define per compiler dynamic lib API attributes
+#if		TINY_ENGINE_COMPILER_MSVC || (TINY_ENGINE_COMPILER_MSVC && TINY_ENGINE_COMPILER_CLANG)
+	#define TINY_ENGINE_APICALL		__stdcall
+	#if	TINY_ENGINE_EXPORT_SYMBOLS
+		#define TINY_ENGINE_API		__declspec(dllexport)
+	#elif	!TINY_ENGINE_BUILD_STATIC
+		#define TINY_ENGINE_API		__declspec(dllimport)
+	#else
+		#define TINY_ENGINE_API
+	#endif
+#elif	TINY_ENGINE_COMPILER_GCC || (TINY_ENGINE_COMPILER_GCC && TINY_ENGINE_COMPILER_CLANG)
 	#define TINY_ENGINE_APICALL
-	#define TINY_ENGINE_API
+	#if	TINY_ENGINE_EXPORT_SYMBOLS
+		#define TINY_ENGINE_API		__attribute__((visbility("default")))
+	#else
+		#define TINY_ENGINE_API
+	#endif
 #endif
 
 // NOLINTBEGIN(bugprone-reserved-identifier)

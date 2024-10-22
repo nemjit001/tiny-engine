@@ -12,6 +12,7 @@ target_link_libraries(TinyEngine-static PUBLIC glfw ${GLFW_LIBRARIES} Vulkan::He
 target_compile_definitions(TinyEngine-static
 	PUBLIC
 	TINY_ENGINE_BUILD_STATIC=1
+	TINY_ENGINE_EXPORT_SYMBOLS=0
 	TINY_ENGINE_VULKAN_AVAILABLE=1
 	GLFW_INCLUDE_NONE
 	VK_NO_PROTOTYPES

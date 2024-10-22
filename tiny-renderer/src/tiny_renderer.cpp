@@ -12,56 +12,56 @@ public:
 	TinyRenderer() = default;
 	virtual ~TinyRenderer() = default;
 
-	virtual bool init(tiny_engine::core::CommandlineArgs const& args, tiny_engine::core::WindowSystem* pWindowSystem) override final;
+	virtual bool TINY_ENGINE_APICALL init(tiny_engine::core::CommandlineArgs const& args, tiny_engine::core::WindowSystem* pWindowSystem) override final;
 
-	virtual void shutdown() override final;
+	virtual void TINY_ENGINE_APICALL shutdown() override final;
 
-	virtual bool update() override final;
+	virtual bool TINY_ENGINE_APICALL update() override final;
 
-	virtual void render() override final;
+	virtual void TINY_ENGINE_APICALL render() override final;
 
-	virtual void handleResize(tiny_engine::core::WindowSize const& size) override final;
+	virtual void TINY_ENGINE_APICALL handleResize(tiny_engine::core::WindowSize const& size) override final;
 
-	virtual bool allowWindowResize() const override final;
+	virtual bool TINY_ENGINE_APICALL allowWindowResize() const override final;
 
-	virtual tiny_engine::AppVersion version() const override final;
+	virtual tiny_engine::AppVersion TINY_ENGINE_APICALL version() const override final;
 
-	virtual char const* name() const override final;
+	virtual char const* TINY_ENGINE_APICALL name() const override final;
 };
 
-bool TinyRenderer::init(tiny_engine::core::CommandlineArgs const& args, tiny_engine::core::WindowSystem* pWindowSystem)
+bool TINY_ENGINE_APICALL TinyRenderer::init(tiny_engine::core::CommandlineArgs const& args, tiny_engine::core::WindowSystem* pWindowSystem)
 {
 	TINY_ENGINE_MARK_UNUSED(args);
 	TINY_ENGINE_MARK_UNUSED(pWindowSystem);
 	return true;
 }
 
-void TinyRenderer::shutdown()
+void TINY_ENGINE_APICALL TinyRenderer::shutdown()
 {
 	//
 }
 
-bool TinyRenderer::update()
+bool TINY_ENGINE_APICALL TinyRenderer::update()
 {
 	return true;
 }
 
-void TinyRenderer::render()
+void TINY_ENGINE_APICALL TinyRenderer::render()
 {
 	//
 }
 
-void TinyRenderer::handleResize(tiny_engine::core::WindowSize const& size)
+void TINY_ENGINE_APICALL TinyRenderer::handleResize(tiny_engine::core::WindowSize const& size)
 {
 	printf("Resize event: (%u x %u)\n", size.width, size.height);
 }
 
-bool TinyRenderer::allowWindowResize() const
+bool TINY_ENGINE_APICALL TinyRenderer::allowWindowResize() const
 {
 	return true;
 }
 
-tiny_engine::AppVersion TinyRenderer::version() const
+tiny_engine::AppVersion TINY_ENGINE_APICALL TinyRenderer::version() const
 {
 	return tiny_engine::AppVersion{
 		TINY_RENDERER_VERSION_MAJOR,
@@ -70,7 +70,7 @@ tiny_engine::AppVersion TinyRenderer::version() const
 	};
 }
 
-char const* TinyRenderer::name() const
+char const* TINY_ENGINE_APICALL TinyRenderer::name() const
 {
 	return TINY_RENDERER_NAME;
 }
