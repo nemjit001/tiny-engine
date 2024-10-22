@@ -1,6 +1,7 @@
 #include <tiny_engine/application.hpp>
 #include <tiny_engine/defines.hpp>
 #include <tiny_engine/engine.hpp>
+#include <tiny_engine/core/logging.hpp>
 
 #include "app_config.h"
 
@@ -53,7 +54,7 @@ void TINY_ENGINE_APICALL TinyRenderer::render()
 
 void TINY_ENGINE_APICALL TinyRenderer::handleResize(tiny_engine::core::WindowSize const& size)
 {
-	printf("Resize event: (%u x %u)\n", size.width, size.height);
+	tiny_engine::core::Logging::Log(tiny_engine::core::LogLevel::Trace, "Resize event: (%u x %u)\n", size.width, size.height);
 }
 
 bool TINY_ENGINE_APICALL TinyRenderer::allowWindowResize() const
