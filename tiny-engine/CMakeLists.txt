@@ -40,7 +40,11 @@ if (LINUX)
 	target_link_libraries(TinyEngine-shared PUBLIC dl)
 endif()
 
-add_library(TinyEngine::TinyEngine ALIAS TinyEngine-shared)
+if (${TINY_ENGINE_BUILD_STATIC})
+	add_library(TinyEngine::TinyEngine ALIAS TinyEngine-static)
+else()
+	add_library(TinyEngine::TinyEngine ALIAS TinyEngine-shared)
+endif()
 
 if (${TINY_ENGINE_BUILD_TESTS})
 	add_subdirectory("test/")

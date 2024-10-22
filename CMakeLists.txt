@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_VISIBILITY_PRESET "hidden")
 
+option(TINY_ENGINE_BUILD_STATIC "Link all libraries statically" OFF)
 option(TINY_ENGINE_BUILD_TESTS "Build Tiny Engine test suite" ON)
 
 find_program(TINY_ENGINE_CLANG_TIDY "clang-tidy")
