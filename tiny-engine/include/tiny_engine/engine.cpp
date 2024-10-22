@@ -19,7 +19,7 @@ namespace tiny_engine
 		//
 	}
 
-	int Engine::run(IApplication* pApplication)
+	int TINY_ENGINE_APICALL Engine::run(IApplication* pApplication)
 	{
 		if (pApplication == nullptr) {
 			return eEngineResultNoApp;

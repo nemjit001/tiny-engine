@@ -7,32 +7,32 @@ namespace tiny_engine
 {
 	bool IApplication::running = true;
 
-	void IApplication::handleResize(core::WindowSize const& size)
+	void TINY_ENGINE_APICALL IApplication::handleResize(core::WindowSize const& size)
 	{
 		TINY_ENGINE_MARK_UNUSED(size);
 	}
 
-	void IApplication::exit()
+	void TINY_ENGINE_APICALL IApplication::exit()
 	{
 		running = false;
 	}
 
-	bool IApplication::isRunning() const
+	bool TINY_ENGINE_APICALL IApplication::isRunning() const
 	{
 		return running;
 	}
 
-	bool IApplication::allowWindowResize() const
+	bool TINY_ENGINE_APICALL IApplication::allowWindowResize() const
 	{
 		return false;
 	}
 
-	AppVersion IApplication::version() const
+	AppVersion TINY_ENGINE_APICALL IApplication::version() const
 	{
 		return { 0, 0, 0 };
 	}
 
-	char const* IApplication::name() const
+	char const* TINY_ENGINE_APICALL IApplication::name() const
 	{
 		return "A Tiny Engine Application";
 	}

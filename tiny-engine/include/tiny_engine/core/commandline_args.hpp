@@ -1,31 +1,36 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include <cstdint>
+
+#include "tiny_engine/defines.hpp"
 
 namespace tiny_engine::core
 {
 	/// @brief Commandline argument store, parsed from the `argv` passed to main.
-	class CommandlineArgs
+	class TINY_ENGINE_API CommandlineArgs
 	{
 	public:
-		static constexpr char const* const EndOfOptions = "--";
-
 		CommandlineArgs(int argc, char const** argv);
 
 		/// @brief Check if a commandline variable is set.
-		/// @param name Entire name of the variable, with leading symbols (i.e. "foo" is different from "--foo").
+		/// @param pName Entire name of the variable, with leading symbols (i.e. "foo" is different from "--foo").
 		/// @return A boolean indicating if the variable is set.
-		bool isSet(std::string const& name) const;
+		bool TINY_ENGINE_APICALL isSet(char const* pName) const;
 
 		/// @brief Retrieve the value associated with a commandline argument.
-		/// @param name Entire name of the variable, with leading symbols.
-		/// @return An empty string if not set, or value is missing.
-		std::string argValue(std::string const& name) const;
+		/// @param pName Entire name of the variable, with leading symbols.
+		/// @return An empty cstring if not set, or the value is missing.
+		char const* TINY_ENGINE_APICALL argValue(char const* pName) const;
 
-		std::vector<std::string> getPostOptionsValues() const;
+		/// @brief Get the post options values passed to the program.
+		/// @param pCount Number of option values returned.
+		/// @return 
+		char const** TINY_ENGINE_APICALL getPostOptionsValues(uint32_t* pCount) const;
 
 	private:
-		std::vector<std::string> m_argv;
+		static constexpr char const* const EndOfOptions = "--";
+
+		size_t m_argc = 0;
+		char const** m_ppArgv = nullptr;
 	};
 } // namespace tiny_engine::core

@@ -1,24 +1,29 @@
 #include "tiny_engine/core/commandline_args.hpp"
 
+#include <cstring>
+
+#include "tiny_engine/assert.hpp"
+
 namespace tiny_engine::core
 {
 	CommandlineArgs::CommandlineArgs(int argc, char const** argv)
+		:
+		m_argc(static_cast<size_t>(argc)),
+		m_ppArgv(argv)
 	{
-		m_argv.resize(argc);
-		for (int i = 0; i < argc; i++) {
-			m_argv[i] = std::string(argv[i]);
-		}
+		//
 	}
 
-	bool CommandlineArgs::isSet(std::string const& name) const
+	bool TINY_ENGINE_APICALL CommandlineArgs::isSet(char const* pName) const
 	{
-		for (auto const& arg : m_argv)
+		for (size_t i = 0; i < m_argc; i++)
 		{
-			if (arg == CommandlineArgs::EndOfOptions) {
+			char const* pArg = m_ppArgv[i];
+			if (strcmp(pArg, CommandlineArgs::EndOfOptions) == 0) {
 				break;
 			}
 
-			if (arg == name) {
+			if (strcmp(pArg, pName) == 0) {
 				return true;
 			}
 		}
@@ -26,50 +31,54 @@ namespace tiny_engine::core
 		return false;
 	}
 
-	std::string CommandlineArgs::argValue(std::string const& name) const
+	char const* TINY_ENGINE_APICALL CommandlineArgs::argValue(char const* pName) const
 	{
 		bool found = false;
 		size_t argIdx = 0;
-		for (auto const& arg : m_argv)
+		for (size_t i = 0; i < m_argc; i++)
 		{
-			if (arg == CommandlineArgs::EndOfOptions) {
+			char const* pArg = m_ppArgv[i];
+			if (strcmp(pArg, CommandlineArgs::EndOfOptions) == 0) {
 				break;
 			}
 
-			if (arg == name)
-			{
+			if (strcmp(pArg, pName) == 0) {
 				found = true;
-				break;
+				argIdx = i;
 			}
-
-			argIdx++;
 		}
 
 		// Check if next value is within argv bounds, valiation of retrieved value is left to caller
-		if (found && (argIdx + 1) < m_argv.size()) {
-			return m_argv[argIdx + 1];
+		if (found && (argIdx + 1) < m_argc) {
+			return m_ppArgv[argIdx + 1];
 		}
 
-		return {};
+		return "";
 	}
 
-	std::vector<std::string> CommandlineArgs::getPostOptionsValues() const
+	char const** TINY_ENGINE_APICALL CommandlineArgs::getPostOptionsValues(uint32_t* pCount) const
 	{
-		std::vector<std::string> values;
-		bool postOptions = false;
-		for (auto const& arg : m_argv)
-		{
-			if (arg == CommandlineArgs::EndOfOptions)
-			{
-				postOptions = true;
-				continue;
-			}
+		TINY_ENGINE_ASSERT(pCount != nullptr);
 
-			if (postOptions) {
-				values.push_back(arg);
+		bool hasOptions = false;
+		size_t optionsStart = 0;
+		for (size_t i = 0; i < m_argc; i++)
+		{
+			char const* pArg = m_ppArgv[i];
+			if (strcmp(pArg, CommandlineArgs::EndOfOptions) == 0)
+			{
+				hasOptions = true;
+				optionsStart = i + 1;
+				break;
 			}
 		}
 
-		return values;
+		if (hasOptions && optionsStart < m_argc) {
+			*pCount = static_cast<uint32_t>(m_argc - optionsStart);
+			return &m_ppArgv[optionsStart];
+		}
+
+		*pCount = 0;
+		return nullptr;
 	}
 } // namespace tiny_engine::core

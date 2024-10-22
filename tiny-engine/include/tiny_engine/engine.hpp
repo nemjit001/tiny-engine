@@ -2,6 +2,7 @@
 
 #include <cstdint>
 
+#include "tiny_engine/defines.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
@@ -24,7 +25,7 @@ namespace tiny_engine
 	};
 
 	/// @brief The Engine class contains engine functionality (init, shutdown, main loop).
-	class Engine
+	class TINY_ENGINE_API Engine
 	{
 	public:
 		/// @brief 
@@ -38,7 +39,7 @@ namespace tiny_engine
 		/// @brief Run the engine main loop.
 		/// @param pApplication Application running on top of the engine.
 		/// @return 0 on success, non-zero otherwise.
-		int run(IApplication* pApplication);
+		int TINY_ENGINE_APICALL run(IApplication* pApplication);
 
 	private:
 		core::CommandlineArgs m_args;

@@ -2,10 +2,12 @@
 
 #include <cstdint>
 
+#include "tiny_engine/defines.hpp"
+
 namespace tiny_engine::core
 {
 	/// @brief Log level for use in Logging system.
-	enum class LogLevel : uint8_t
+	enum class LogLevel : int8_t
 	{
 		Trace = 0x01,
 		Info = 0x02,
@@ -16,13 +18,13 @@ namespace tiny_engine::core
 		All = Trace | Info | Warning | Error,
 	};
 
-	class Logging
+	class TINY_ENGINE_API Logging
 	{
 	public:
 		/// @brief Convert a given LogLevel to its cstring represenation.
 		/// @param level 
 		/// @return A static lifetime cstring.
-		static char const* LevelToString(LogLevel level);
+		static char const* TINY_ENGINE_APICALL LevelToString(LogLevel level);
 
 		/// @brief Log a message using the internal logging mechanism.
 		/// @tparam ...Args Argument pack to be passed to the log function.
@@ -30,7 +32,7 @@ namespace tiny_engine::core
 		/// @param fmt Format string using printf conventions.
 		/// @param ...args Arguments for the format string.
 		template<typename ...Args>
-		static void Log(LogLevel level, char const* fmt, Args&&... args);
+		static void TINY_ENGINE_APICALL Log(LogLevel level, char const* fmt, Args&&... args);
 	};
 } // namespace tiny_engine::core
 
