@@ -29,11 +29,9 @@ namespace tiny_engine::core
 
 		PlatformHandle handle = nullptr;
 #if		TINY_ENGINE_PLATFORM_WINDOWS
-		UINT const loadFlags = 0;
-		handle = LoadLibraryEx(pName, nullptr, loadFlags);
+		handle = LoadLibraryEx(pName, nullptr, 0);
 #elif	TINY_ENGINE_PLATFORM_LINUX
-		int const mode = 0;
-		handle = dlopen(pName, mode);
+		handle = dlopen(pName, RTLD_NOW);
 #endif
 
 		return new DyLibHandle{ handle };
