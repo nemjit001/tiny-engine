@@ -4,6 +4,7 @@
 
 #include "tiny_engine/defines.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
+#include "tiny_engine/core/logging.hpp"
 #include "tiny_engine/core/window_system.hpp"
 
 namespace tiny_engine
@@ -43,7 +44,6 @@ namespace tiny_engine
 
 	private:
 		core::CommandlineArgs m_args;
-		core::WindowSystem m_windowSystem;
 	};
 } // namespace tiny_engine
 

@@ -1,10 +1,14 @@
 #include "tiny_engine/engine.hpp"
 
+#include <memory>
+
 #include "engine_config.h"
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
 #include "tiny_engine/core/logging.hpp"
 #include "tiny_engine/core/window_system.hpp"
+#include "tiny_engine/rendering/render_backend.hpp"
+#include "rendering/vulkan/render_backend_vulkan.hpp"
 
 namespace tiny_engine
 {
@@ -13,8 +17,7 @@ namespace tiny_engine
 
 	Engine::Engine(core::CommandlineArgs const& args)
 		:
-		m_args(args),
-		m_windowSystem()
+		m_args(args)
 	{
 		//
 	}
@@ -25,25 +28,27 @@ namespace tiny_engine
 			return eEngineResultNoApp;
 		}
 
+		core::WindowSystem windowSystem;
+
 		core::WindowDesc window{};
 		window.pTitle = pApplication->name();
 		window.width = DefaultWindowWidth;
 		window.height = DefaultWindowHeight;
 		window.resizable = pApplication->allowWindowResize();
 
-		if (!m_windowSystem.init(window)) {
+		if (!windowSystem.init(window)) {
 			return eEngineResultSubsystemInitFailed;
 		}
 
-		if (!pApplication->init(m_args, &m_windowSystem)) {
+		if (!pApplication->init(m_args, &windowSystem)) {
 			return eEngineResultAppInitFailed;
 		}
 
-		m_windowSystem.setResizeHandler([&](core::WindowSize const& size) {
+		windowSystem.setResizeHandler([&](core::WindowSize const& size) {
 			pApplication->handleResize(size);
 		});
 
-		m_windowSystem.setCloseHandler([&]() {
+		windowSystem.setCloseHandler([&]() {
 			pApplication->exit();
 		});
 
@@ -54,12 +59,12 @@ namespace tiny_engine
 
 		while (pApplication->isRunning())
 		{
-			if (!m_windowSystem.update() && pApplication->isRunning()) {
+			if (!windowSystem.update() && pApplication->isRunning()) {
 				core::Logging::Log(core::LogLevel::Error, "Failed to update window system\n");
 				pApplication->exit();
 			}
 
-			if (!m_windowSystem.minimized()) {
+			if (!windowSystem.minimized()) {
 				if (!pApplication->update()) {
 					core::Logging::Log(core::LogLevel::Error, "Failed to update application state\n");
 					pApplication->exit();
@@ -72,7 +77,7 @@ namespace tiny_engine
 		core::Logging::Log(core::LogLevel::Info, "Shutting down %s\n", TINY_ENGINE_NAME);
 
 		pApplication->shutdown();
-		m_windowSystem.shutdown();
+		windowSystem.shutdown();
 		return eEngineResultOK;
 	}
 } // namespace tiny_engine

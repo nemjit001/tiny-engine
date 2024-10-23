@@ -24,9 +24,9 @@ namespace tiny_engine::core
 		char const* TINY_ENGINE_APICALL argValue(char const* pName) const;
 
 		/// @brief Get the post options values passed to the program.
-		/// @param pCount Number of option values returned.
+		/// @param count Number of option values returned.
 		/// @return 
-		char const** TINY_ENGINE_APICALL getPostOptionsValues(uint32_t* pCount) const;
+		char const** TINY_ENGINE_APICALL getPostOptionsValues(uint32_t& count) const;
 
 	private:
 		static constexpr char const* const EndOfOptions = "--";

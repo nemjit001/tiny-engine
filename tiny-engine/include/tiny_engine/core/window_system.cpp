@@ -4,9 +4,7 @@
 	#define GLFW_EXPOSE_NATIVE_WIN32
 #endif
 
-#if		TINY_ENGINE_VULKAN_AVAILABLE
-	#define GLFW_INCLUDE_VULKAN
-#endif
+#define GLFW_INCLUDE_VULKAN
 
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
@@ -117,18 +115,6 @@ namespace tiny_engine::core
 		return s_WindowMinimized;
 	}
 
-#if		TINY_ENGINE_PLATFORM_WINDOWS
-	HWND TINY_ENGINE_APICALL WindowSystem::getHWND() const
-	{
-		if (s_pWindow == nullptr) {
-			return nullptr;
-		}
-
-		return glfwGetWin32Window(s_pWindow);
-	}
-#endif
-
-#if		TINY_ENGINE_VULKAN_AVAILABLE
 	char const** TINY_ENGINE_APICALL WindowSystem::requiredVulkanInstanceExtensions(uint32_t* pExtensionCount) const
 	{
 		return glfwGetRequiredInstanceExtensions(pExtensionCount);
@@ -137,6 +123,16 @@ namespace tiny_engine::core
 	VkResult TINY_ENGINE_APICALL WindowSystem::createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface)
 	{
 		return glfwCreateWindowSurface(instance, s_pWindow, pAllocator, pSurface);
+	}
+
+#if		TINY_ENGINE_PLATFORM_WINDOWS
+	HWND TINY_ENGINE_APICALL WindowSystem::getHWND() const
+	{
+		if (s_pWindow == nullptr) {
+			return nullptr;
+		}
+
+		return glfwGetWin32Window(s_pWindow);
 	}
 #endif
 } // namespace tiny_engine::core

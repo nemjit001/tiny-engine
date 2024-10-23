@@ -2,15 +2,12 @@
 
 #include <cstdint>
 #include <functional>
+#include <vulkan/vulkan.h>
 
 #include "tiny_engine/defines.hpp"
 
 #if		TINY_ENGINE_PLATFORM_WINDOWS
 	#include <windows.h>
-#endif
-
-#if		TINY_ENGINE_VULKAN_AVAILABLE
-	#include <vulkan/vulkan.h>
 #endif
 
 namespace tiny_engine::core
@@ -75,14 +72,6 @@ namespace tiny_engine::core
 		/// @return 
 		bool TINY_ENGINE_APICALL minimized() const;
 
-#if		TINY_ENGINE_PLATFORM_WINDOWS
-		/// @brief Retrieve the HWND associated with the application window.
-		/// WARNING: This is a Windows specific function, this is not available on non-windows platforms.
-		/// @return 
-		HWND TINY_ENGINE_APICALL getHWND() const;
-#endif
-
-#if		TINY_ENGINE_VULKAN_AVAILABLE
 		/// @brief Retrieve the required Vulkan instance extensions for window support.
 		/// @param pExtensionCount Number of extensions in the returned array.
 		/// @return An array of extension names.
@@ -94,6 +83,12 @@ namespace tiny_engine::core
 		/// @param pSurface 
 		/// @return 
 		VkResult TINY_ENGINE_APICALL createVulkanWindowSurface(VkInstance instance, VkAllocationCallbacks const* pAllocator, VkSurfaceKHR* pSurface);
+
+#if		TINY_ENGINE_PLATFORM_WINDOWS
+		/// @brief Retrieve the HWND associated with the application window.
+		/// WARNING: This is a Windows specific function, this is not available on non-windows platforms.
+		/// @return 
+		HWND TINY_ENGINE_APICALL getHWND() const;
 #endif
 	};
 } // namespace tiny_engine::core

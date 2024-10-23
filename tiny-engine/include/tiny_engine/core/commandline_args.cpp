@@ -56,10 +56,8 @@ namespace tiny_engine::core
 		return "";
 	}
 
-	char const** TINY_ENGINE_APICALL CommandlineArgs::getPostOptionsValues(uint32_t* pCount) const
+	char const** TINY_ENGINE_APICALL CommandlineArgs::getPostOptionsValues(uint32_t& count) const
 	{
-		TINY_ENGINE_ASSERT(pCount != nullptr);
-
 		bool hasOptions = false;
 		size_t optionsStart = 0;
 		for (size_t i = 0; i < m_argc; i++)
@@ -74,11 +72,11 @@ namespace tiny_engine::core
 		}
 
 		if (hasOptions && optionsStart < m_argc) {
-			*pCount = static_cast<uint32_t>(m_argc - optionsStart);
+			count = static_cast<uint32_t>(m_argc - optionsStart);
 			return &m_ppArgv[optionsStart];
 		}
 
-		*pCount = 0;
+		count = 0;
 		return nullptr;
 	}
 } // namespace tiny_engine::core

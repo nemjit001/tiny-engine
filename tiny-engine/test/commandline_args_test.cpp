@@ -60,7 +60,7 @@ namespace tiny_engine_core
 
 		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		uint32_t valCount = 0;
-		char const** vals = args.getPostOptionsValues(&valCount);
+		char const** vals = args.getPostOptionsValues(valCount);
 		ASSERT_EQ(valCount, 0);
 		ASSERT_EQ(vals, nullptr);
 	}
@@ -77,7 +77,7 @@ namespace tiny_engine_core
 
 		tiny_engine::core::CommandlineArgs args(sizeof(argv) / sizeof(argv[0]), argv);
 		uint32_t valCount = 0;
-		auto const& vals = args.getPostOptionsValues(&valCount);
+		auto const& vals = args.getPostOptionsValues(valCount);
 		ASSERT_EQ(valCount, 2);
 		ASSERT_NE(vals, nullptr);
 		ASSERT_STREQ(vals[0], "foo");

@@ -13,7 +13,6 @@ target_compile_definitions(TinyEngine-static
 	PUBLIC
 	TINY_ENGINE_BUILD_STATIC=1
 	TINY_ENGINE_EXPORT_SYMBOLS=0
-	TINY_ENGINE_VULKAN_AVAILABLE=1
 	GLFW_INCLUDE_NONE
 	VK_NO_PROTOTYPES
 )
@@ -26,7 +25,6 @@ target_link_libraries(TinyEngine-shared PUBLIC glfw ${GLFW_LIBRARIES} Vulkan::He
 target_compile_definitions(TinyEngine-shared
 	PUBLIC
 	TINY_ENGINE_BUILD_STATIC=0
-	TINY_ENGINE_VULKAN_AVAILABLE=1
 	GLFW_INCLUDE_NONE
 	VK_NO_PROTOTYPES
 	PRIVATE
@@ -36,7 +34,10 @@ target_include_directories(TinyEngine-shared PUBLIC "include/" "${CMAKE_CURRENT_
 target_warnings_as_errors(TinyEngine-shared)
 target_enable_clang_tidy(TinyEngine-shared)
 
-if (LINUX)
+if (WIN32)
+	target_link_libraries(TinyEngine-static PUBLIC d3d12 dxgi)
+	target_link_libraries(TinyEngine-shared PUBLIC d3d12 dxgi)
+elseif (LINUX)
 	target_link_libraries(TinyEngine-static PUBLIC dl)
 	target_link_libraries(TinyEngine-shared PUBLIC dl)
 endif()

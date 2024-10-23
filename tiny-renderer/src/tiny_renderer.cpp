@@ -1,7 +1,6 @@
 #include <tiny_engine/application.hpp>
 #include <tiny_engine/defines.hpp>
 #include <tiny_engine/engine.hpp>
-#include <tiny_engine/core/logging.hpp>
 
 #include "app_config.h"
 
