@@ -1,7 +1,5 @@
 #include "tiny_engine/engine.hpp"
 
-#include <memory>
-
 #include "engine_config.h"
 #include "tiny_engine/application.hpp"
 #include "tiny_engine/core/commandline_args.hpp"
