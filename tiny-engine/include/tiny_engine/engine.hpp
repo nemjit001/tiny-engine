@@ -34,8 +34,8 @@ namespace tiny_engine
 		explicit Engine(core::CommandlineArgs const& args);
 		~Engine() = default;
 
-		Engine(Engine const&) noexcept = delete;
-		Engine& operator=(Engine const&) noexcept = delete;
+		Engine(Engine const&) = delete;
+		Engine& operator=(Engine const&) = delete;
 
 		/// @brief Run the engine main loop.
 		/// @param pApplication Application running on top of the engine.

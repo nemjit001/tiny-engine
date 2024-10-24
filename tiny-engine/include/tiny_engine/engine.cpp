@@ -8,7 +8,6 @@
 #include "tiny_engine/core/logging.hpp"
 #include "tiny_engine/core/window_system.hpp"
 #include "tiny_engine/rendering/render_backend.hpp"
-#include "rendering/vulkan/render_backend_vulkan.hpp"
 
 namespace tiny_engine
 {

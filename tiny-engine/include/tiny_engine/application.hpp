@@ -30,8 +30,8 @@ namespace tiny_engine
 		IApplication() = default;
 		virtual ~IApplication() = default;
 
-		IApplication(IApplication const&) noexcept = default;
-		IApplication& operator=(IApplication const&) noexcept = default;
+		IApplication(IApplication const&) = default;
+		IApplication& operator=(IApplication const&) = default;
 
 		/// @brief Initialize the application post construction.
 		/// @param args Commandline arguments passed to Engine.
